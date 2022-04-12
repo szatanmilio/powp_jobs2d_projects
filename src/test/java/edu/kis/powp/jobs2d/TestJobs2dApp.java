@@ -5,6 +5,8 @@ import java.awt.event.ActionEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.swing.event.MouseInputAdapter;
+
 import edu.kis.legacy.drawer.panel.DrawPanelController;
 import edu.kis.legacy.drawer.shape.LineFactory;
 import edu.kis.powp.appbase.Application;
@@ -97,6 +99,18 @@ public class TestJobs2dApp {
 		application.addComponentMenuElement(Logger.class, "OFF logging", (ActionEvent e) -> logger.setLevel(Level.OFF));
 	}
 
+	private static void setMouseDrawer(Application application) {
+		application.getFreePanel().addMouseListener(new MouseInputAdapter() {
+			@Override
+			public void mouseClicked(java.awt.event.MouseEvent e) {
+				int correctedX = e.getX() - 268;
+				int correctedY = e.getY() - 227;
+				
+				DriverFeature.getDriverManager().getCurrentDriver().operateTo(correctedX, correctedY);
+			};
+		});
+	}
+
 	/**
 	 * Launch the application.
 	 */
@@ -113,6 +127,7 @@ public class TestJobs2dApp {
 				setupCommandTests(app);
 				setupLogger(app);
 				setupWindows(app);
+				setMouseDrawer(app);
 
 				app.setVisibility(true);
 			}
