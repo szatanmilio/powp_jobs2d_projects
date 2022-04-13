@@ -5,14 +5,13 @@ import java.awt.event.ActionEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.swing.event.MouseInputAdapter;
-
 import edu.kis.legacy.drawer.panel.DrawPanelController;
 import edu.kis.legacy.drawer.shape.LineFactory;
 import edu.kis.powp.appbase.Application;
 import edu.kis.powp.jobs2d.command.gui.CommandManagerWindow;
 import edu.kis.powp.jobs2d.command.gui.CommandManagerWindowCommandChangeObserver;
 import edu.kis.powp.jobs2d.drivers.adapter.LineDriverAdapter;
+import edu.kis.powp.jobs2d.events.MouseListener;
 import edu.kis.powp.jobs2d.events.SelectLoadSecretCommandOptionListener;
 import edu.kis.powp.jobs2d.events.SelectRunCurrentCommandOptionListener;
 import edu.kis.powp.jobs2d.events.SelectTestFigure2OptionListener;
@@ -100,15 +99,7 @@ public class TestJobs2dApp {
 	}
 
 	private static void setMouseDrawer(Application application) {
-		application.getFreePanel().addMouseListener(new MouseInputAdapter() {
-			@Override
-			public void mouseClicked(java.awt.event.MouseEvent e) {
-				int correctedX = e.getX() - 268;
-				int correctedY = e.getY() - 227;
-				
-				DriverFeature.getDriverManager().getCurrentDriver().operateTo(correctedX, correctedY);
-			};
-		});
+		application.getFreePanel().addMouseListener(new MouseListener(application.getFreePanel()));
 	}
 
 	/**
@@ -120,14 +111,14 @@ public class TestJobs2dApp {
 				Application app = new Application("Jobs 2D");
 				DrawerFeature.setupDrawerPlugin(app);
 				CommandsFeature.setupCommandManager();
-
+				
+				setMouseDrawer(app);
 				DriverFeature.setupDriverPlugin(app);
 				setupDrivers(app);
 				setupPresetTests(app);
 				setupCommandTests(app);
 				setupLogger(app);
 				setupWindows(app);
-				setMouseDrawer(app);
 
 				app.setVisibility(true);
 			}
