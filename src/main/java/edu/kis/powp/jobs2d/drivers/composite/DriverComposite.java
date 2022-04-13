@@ -7,30 +7,25 @@ import java.util.List;
 
 public class DriverComposite implements IDriverComposite {
 
-    private final List<Job2dDriver> drivers = new LinkedList<>();
+    private final List<Job2dDriver> job2dDriverList = new LinkedList<>();
 
     @Override
     public void setPosition(int i, int i1) {
-        drivers.forEach(job2dDriver -> job2dDriver.setPosition(i, i1));
+        job2dDriverList.forEach(job2dDriver -> job2dDriver.setPosition(i, i1));
     }
 
     @Override
     public void operateTo(int i, int i1) {
-        drivers.forEach(job2dDriver -> job2dDriver.operateTo(i, i1));
+        job2dDriverList.forEach(job2dDriver -> job2dDriver.operateTo(i, i1));
     }
 
     @Override
     public void add(Job2dDriver driver) {
-        drivers.add(driver);
+        job2dDriverList.add(driver);
     }
 
     @Override
     public void remove(Job2dDriver driver) {
-        drivers.remove(driver);
-    }
-
-    @Override
-    public Job2dDriver getChildren(int index) {
-        return drivers.get(index);
+        job2dDriverList.remove(driver);
     }
 }

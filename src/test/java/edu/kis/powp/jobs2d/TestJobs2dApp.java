@@ -56,17 +56,15 @@ public class TestJobs2dApp {
 	 * @param application Application context.
 	 */
 	private static void setupDrivers(Application application) {
-		DriverComposite driverComposite = new DriverComposite();
-
 		Job2dDriver loggerDriver = new LoggerDriver();
 		DriverFeature.addDriver("Logger driver", loggerDriver);
-		driverComposite.add(loggerDriver);
-
 
 		DrawPanelController drawerController = DrawerFeature.getDrawerController();
 		Job2dDriver driver = new LineDriverAdapter(drawerController, LineFactory.getBasicLine(), "basic");
 		DriverFeature.addDriver("Line Simulator", driver);
 
+		DriverComposite driverComposite = new DriverComposite();
+		driverComposite.add(loggerDriver);
 		driverComposite.add(driver);
 		DriverFeature.addDriver("Composite Simulator", driverComposite);
 

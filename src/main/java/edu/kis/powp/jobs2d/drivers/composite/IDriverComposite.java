@@ -7,5 +7,4 @@ public interface IDriverComposite extends Job2dDriver {
 
     void remove(Job2dDriver driver);
 
-    Job2dDriver getChildren(int index);
 }
