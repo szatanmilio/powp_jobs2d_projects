@@ -22,10 +22,12 @@ public class CountCommandVisitor implements ICommandVisitor {
 
     @Override
     public void visit(ICompoundCommand compoundCommand) {
-        countedCommands = 0;
+        int counter = 0;
         for (Iterator<DriverCommand> it = compoundCommand.iterator(); it.hasNext(); ) {
-            countedCommands += 1;
+            it.next().accept(this);
+            counter += countedCommands;
         }
+        countedCommands = counter;
     }
 
     public int getCountedCommands() {
