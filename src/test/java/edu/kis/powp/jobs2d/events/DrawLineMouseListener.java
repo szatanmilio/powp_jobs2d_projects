@@ -3,21 +3,27 @@ package edu.kis.powp.jobs2d.events;
 import javax.swing.JPanel;
 import javax.swing.event.MouseInputAdapter;
 
-import edu.kis.powp.jobs2d.features.DriverFeature;
+import edu.kis.powp.jobs2d.Job2dDriver;
+import edu.kis.powp.jobs2d.drivers.DriverManager;
 
-public class MouseListener extends MouseInputAdapter {
+public class DrawLineMouseListener extends MouseInputAdapter {
 
-    private JPanel drawArea;
+    private static JPanel drawArea;
+    private static DriverManager driverManager;
+
     private int drawAreaWidth;
     private int drawAreaHeight;
 
     private final static int LEFT_BUTTON = 1;
     private final static int RIGHT_BUTTON = 3;
-
-    public MouseListener(JPanel drawArea) {
-        this.drawArea = drawArea;
-    }
     
+    public static void enable(JPanel drawArea, DriverManager driverManager) {
+        DrawLineMouseListener.drawArea = drawArea;
+        DrawLineMouseListener.driverManager = driverManager;
+
+        drawArea.addMouseListener(new DrawLineMouseListener());
+    }
+
     @Override
     public void mouseClicked(java.awt.event.MouseEvent e) {
         drawAreaWidth = drawArea.getWidth();
@@ -26,13 +32,15 @@ public class MouseListener extends MouseInputAdapter {
         int correctedX = e.getX() - drawAreaWidth / 2;
         int correctedY = e.getY() - drawAreaHeight / 2;
 
+        Job2dDriver currentDriver = driverManager.getCurrentDriver();
+
         switch (e.getButton()) {
             case LEFT_BUTTON:
-                DriverFeature.getDriverManager().getCurrentDriver().operateTo(correctedX, correctedY);
+                currentDriver.operateTo(correctedX, correctedY);
                 break;
         
             case RIGHT_BUTTON:
-                DriverFeature.getDriverManager().getCurrentDriver().setPosition(correctedX, correctedY);
+                currentDriver.setPosition(correctedX, correctedY);
                 break;
 
             default:

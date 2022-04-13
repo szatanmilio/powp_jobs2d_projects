@@ -11,7 +11,7 @@ import edu.kis.powp.appbase.Application;
 import edu.kis.powp.jobs2d.command.gui.CommandManagerWindow;
 import edu.kis.powp.jobs2d.command.gui.CommandManagerWindowCommandChangeObserver;
 import edu.kis.powp.jobs2d.drivers.adapter.LineDriverAdapter;
-import edu.kis.powp.jobs2d.events.MouseListener;
+import edu.kis.powp.jobs2d.events.DrawLineMouseListener;
 import edu.kis.powp.jobs2d.events.SelectLoadSecretCommandOptionListener;
 import edu.kis.powp.jobs2d.events.SelectRunCurrentCommandOptionListener;
 import edu.kis.powp.jobs2d.events.SelectTestFigure2OptionListener;
@@ -99,7 +99,7 @@ public class TestJobs2dApp {
 	}
 
 	private static void setMouseDrawer(Application application) {
-		application.getFreePanel().addMouseListener(new MouseListener(application.getFreePanel()));
+		DrawLineMouseListener.enable(application.getFreePanel(), DriverFeature.getDriverManager());
 	}
 
 	/**
@@ -112,8 +112,8 @@ public class TestJobs2dApp {
 				DrawerFeature.setupDrawerPlugin(app);
 				CommandsFeature.setupCommandManager();
 				
-				setMouseDrawer(app);
 				DriverFeature.setupDriverPlugin(app);
+				setMouseDrawer(app);
 				setupDrivers(app);
 				setupPresetTests(app);
 				setupCommandTests(app);
