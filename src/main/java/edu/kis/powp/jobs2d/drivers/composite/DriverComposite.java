@@ -10,13 +10,13 @@ public class DriverComposite implements IDriverComposite {
     private final List<Job2dDriver> job2dDriverList = new LinkedList<>();
 
     @Override
-    public void setPosition(int i, int i1) {
-        job2dDriverList.forEach(job2dDriver -> job2dDriver.setPosition(i, i1));
+    public void setPosition(int x, int y) {
+        job2dDriverList.forEach(job2dDriver -> job2dDriver.setPosition(x, y));
     }
 
     @Override
-    public void operateTo(int i, int i1) {
-        job2dDriverList.forEach(job2dDriver -> job2dDriver.operateTo(i, i1));
+    public void operateTo(int x, int y) {
+        job2dDriverList.forEach(job2dDriver -> job2dDriver.operateTo(x, y));
     }
 
     @Override
