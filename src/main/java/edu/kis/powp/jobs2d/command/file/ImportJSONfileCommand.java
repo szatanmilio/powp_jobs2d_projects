@@ -1,5 +1,8 @@
-package edu.kis.powp.jobs2d.command;
+package edu.kis.powp.jobs2d.command.file;
 
+import edu.kis.powp.jobs2d.command.DriverCommand;
+import edu.kis.powp.jobs2d.command.OperateToCommand;
+import edu.kis.powp.jobs2d.command.SetPositionCommand;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;

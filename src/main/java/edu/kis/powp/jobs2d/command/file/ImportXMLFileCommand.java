@@ -1,7 +1,11 @@
-package edu.kis.powp.jobs2d.command;
+package edu.kis.powp.jobs2d.command.file;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import edu.kis.powp.jobs2d.command.DriverCommand;
+import edu.kis.powp.jobs2d.command.OperateToCommand;
+import edu.kis.powp.jobs2d.command.SetPositionCommand;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -17,6 +21,7 @@ import java.io.IOException;
 
 public class ImportXMLFileCommand implements IImportCommand {
     private final List<DriverCommand> commandList = new ArrayList<>();
+
     @Override
     public List<DriverCommand> importCommand(String filename) {
         processFile(filename);
