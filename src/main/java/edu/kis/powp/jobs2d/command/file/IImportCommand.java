@@ -1,4 +1,6 @@
-package edu.kis.powp.jobs2d.command;
+package edu.kis.powp.jobs2d.command.file;
+
+import edu.kis.powp.jobs2d.command.DriverCommand;
 
 import java.util.List;
 
