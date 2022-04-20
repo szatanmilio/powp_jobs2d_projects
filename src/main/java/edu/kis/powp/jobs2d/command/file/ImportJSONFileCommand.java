@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ImportJSONfileCommand implements IImportCommand {
+public class ImportJSONFileCommand implements IImportCommand {
 
 	@Override
 	public List<DriverCommand> importCommandSequence(String filename) {
