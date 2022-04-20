@@ -6,11 +6,16 @@ import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.util.List;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JTextArea;
+import javax.swing.*;
+import javax.swing.filechooser.FileSystemView;
 
 import edu.kis.powp.appbase.gui.WindowComponent;
+import edu.kis.powp.jobs2d.command.ComplexCommand;
+import edu.kis.powp.jobs2d.command.DriverCommand;
+import edu.kis.powp.jobs2d.command.file.IImportCommand;
+import edu.kis.powp.jobs2d.command.file.ImportCMDFileCommand;
+import edu.kis.powp.jobs2d.command.file.ImportJSONFileCommand;
+import edu.kis.powp.jobs2d.command.file.ImportXMLFileCommand;
 import edu.kis.powp.jobs2d.command.manager.DriverCommandManager;
 import edu.kis.powp.observer.Subscriber;
 
@@ -30,7 +35,7 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 
 	public CommandManagerWindow(DriverCommandManager commandManager) {
 		this.setTitle("Command Manager");
-		this.setSize(400, 400);
+		this.setSize(400, 600);
 		Container content = this.getContentPane();
 		content.setLayout(new GridBagLayout());
 
@@ -56,6 +61,14 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 		content.add(currentCommandField, c);
 		updateCurrentCommandField();
 
+		JButton btnImportCommand = new JButton("Import command");
+		btnImportCommand.addActionListener((ActionEvent e) -> this.importCommandSequence());
+		c.fill = GridBagConstraints.BOTH;
+		c.weightx = 1;
+		c.gridx = 0;
+		c.weighty = 1;
+		content.add(btnImportCommand, c);
+
 		JButton btnClearCommand = new JButton("Clear command");
 		btnClearCommand.addActionListener((ActionEvent e) -> this.clearCommand());
 		c.fill = GridBagConstraints.BOTH;
@@ -78,6 +91,25 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 		updateCurrentCommandField();
 	}
 
+	private void importCommandSequence() {
+		JFileChooser fileChooser = new JFileChooser(FileSystemView.getFileSystemView().getDefaultDirectory());
+		int returnValue = fileChooser.showOpenDialog(null);
+		if (returnValue != JFileChooser.APPROVE_OPTION) return;
+		String path = fileChooser.getSelectedFile().getAbsolutePath();
+		IImportCommand importCommand;
+		if (path.endsWith(".xml")) {
+			importCommand = new ImportXMLFileCommand();
+		}
+		else if (path.endsWith(".json")) {
+			importCommand = new ImportJSONFileCommand();
+		}
+		else if (path.endsWith(".cmd")) {
+			importCommand = new ImportCMDFileCommand();
+		}
+		else return;
+		List<DriverCommand> commandList = importCommand.importCommandSequence(path);
+		commandManager.setCurrentCommand(commandList, fileChooser.getSelectedFile().getName());
+	}
 	public void updateCurrentCommandField() {
 		currentCommandField.setText(commandManager.getCurrentCommandString());
 	}
