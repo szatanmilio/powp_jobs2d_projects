@@ -23,7 +23,7 @@ public class ImportXMLFileCommand implements IImportCommand {
 	private final List<DriverCommand> commandList = new ArrayList<>();
 
 	@Override
-	public List<DriverCommand> importCommand(String filename) {
+	public List<DriverCommand> importCommandSequence(String filename) {
 		processFile(filename);
 		return commandList;
 	}

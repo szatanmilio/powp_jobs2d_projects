@@ -17,7 +17,7 @@ import java.util.List;
 public class ImportJSONfileCommand implements IImportCommand {
 
 	@Override
-	public List<DriverCommand> importCommand(String filename) {
+	public List<DriverCommand> importCommandSequence(String filename) {
 		List<DriverCommand> commandList = new ArrayList<>();
 		JSONParser jsonParser = new JSONParser();
 		try {

@@ -12,7 +12,7 @@ import java.util.List;
 public class ImportCMDFileCommand implements IImportCommand {
 
 	@Override
-	public List<DriverCommand> importCommand(String filename) {
+	public List<DriverCommand> importCommandSequence(String filename) {
 		List<DriverCommand> commandList = new ArrayList<>();
 		try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
 			while (br.ready()) {
