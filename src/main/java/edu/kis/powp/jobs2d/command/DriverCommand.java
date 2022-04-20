@@ -12,6 +12,5 @@ public interface DriverCommand {
 	 * 
 	 * @param driver driver.
 	 */
-	public void execute(Job2dDriver driver);
-
+	public void execute(Job2dDriver job2dDriver);
 }
