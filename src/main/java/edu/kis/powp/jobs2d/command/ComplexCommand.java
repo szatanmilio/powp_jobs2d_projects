@@ -11,8 +11,7 @@ public class ComplexCommand implements DriverCommand{
 
 	private List<DriverCommand> commands;
 
-	public ComplexCommand()
-	{
+	public ComplexCommand() {
 		this.commands = new ArrayList<>();
 	}
 
@@ -20,15 +19,9 @@ public class ComplexCommand implements DriverCommand{
 		this.commands = new ArrayList<>(driverCommands);
 	}
 
-	public void appendCommand(DriverCommand command)
-	{
-		this.commands.add(command);
-	}
-
 	@Override
 	public void execute(Job2dDriver job2dDriver) {
-		for(DriverCommand command: commands)
-		{
+		for(DriverCommand command: commands) {
 			command.execute(job2dDriver);
 		}
 	}
@@ -39,6 +32,16 @@ public class ComplexCommand implements DriverCommand{
 
 		public Builder add(DriverCommand command) {
 			commandList.add(command);
+			return this;
+		}
+
+		public Builder addSetPosition(int x, int y) {
+			commandList.add(new SetPositionCommand(x, y));
+			return this;
+		}
+
+		public Builder addOperateTo(int x, int y) {
+			commandList.add(new OperateToCommand(x, y));
 			return this;
 		}
 

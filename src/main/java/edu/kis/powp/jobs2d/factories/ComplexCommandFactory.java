@@ -11,31 +11,32 @@ public class ComplexCommandFactory {
 
     public ComplexCommand drawRectangle(int x, int y, int width, int height) {
         return new ComplexCommand.Builder()
-                .add(new SetPositionCommand(x, y)).add(new OperateToCommand(x+width, y))
-                .add(new OperateToCommand(x+width, y+height))
-                .add(new OperateToCommand(x, y+height))
-                .add(new OperateToCommand(x, y))
+                .addSetPosition(x, y)
+                .addOperateTo(x+width, y)
+                .addOperateTo(x+width, y+height)
+                .addOperateTo(x, y+height)
+                .addOperateTo(x, y)
                 .build();
 
     }
+
     public ComplexCommand drawTriangle(int x, int y, int height, int width) {
         return new ComplexCommand.Builder()
-                .add(new SetPositionCommand(x, y))
-                .add(new OperateToCommand(x, y+height))
-                .add(new OperateToCommand(x+width, y+height))
-                .add(new OperateToCommand(x, y))
+                .addSetPosition(x, y)
+                .addOperateTo(x, y+height)
+                .addOperateTo(x+width, y+height)
+                .addOperateTo(x, y)
                 .build();
     }
 
-    public ComplexCommand drawStar()
-    {
+    public ComplexCommand drawStar() {
         return new ComplexCommand.Builder()
-            .add(new SetPositionCommand(60, 20))
-            .add(new OperateToCommand(100, 110))
-            .add(new OperateToCommand(10, 50))
-            .add(new OperateToCommand(110, 50))
-            .add(new OperateToCommand(20, 110))
-            .add(new OperateToCommand(60, 20))
-            .build();
+                .addSetPosition(60, 20)
+                .addOperateTo(100, 110)
+                .addOperateTo(10, 50)
+                .addOperateTo(110, 50)
+                .addOperateTo(20, 110)
+                .addOperateTo(60, 20)
+                .build();
     }
 }
