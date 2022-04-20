@@ -23,6 +23,7 @@ public class SelectTestFigureOptionListener implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Job2dDriver driver = driverManager.getCurrentDriver();
+		ComplexCommandFactory factory = new ComplexCommandFactory();
 		switch (this.testShape) {
 			case FIGURE1:
 				FiguresJoe.figureScript1(driver);
@@ -30,13 +31,11 @@ public class SelectTestFigureOptionListener implements ActionListener {
 			case FIGURE2:
 				FiguresJoe.figureScript2(driver);
 				break;
-
 			case RECTANGLE:
-				ComplexCommandFactory.getRectangle().execute(driver);
+				factory.drawRectangle(100,100,100,100).execute(driver);
 				break;
-
 			case STAR:
-				ComplexCommandFactory.getStar().execute(driver);
+				factory.drawStar().execute(driver);
 				break;
 		}
 	}
