@@ -1,5 +1,6 @@
 package edu.kis.powp.jobs2d.command.file;
 
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,13 +11,13 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import java.io.File;
 import java.io.IOException;
 
 public class ImportXMLFileCommand implements IImportCommand {
@@ -24,7 +25,7 @@ public class ImportXMLFileCommand implements IImportCommand {
 
 	@Override
 	public List<DriverCommand> importCommandSequence(String filename) {
-		processFile(filename);
+		processText(filename);
 		return commandList;
 	}
 
@@ -43,12 +44,14 @@ public class ImportXMLFileCommand implements IImportCommand {
 		}
 	}
 
-	private void processFile(String filename) {
+	private void processText(String text) {
 		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
 		try {
 			documentBuilderFactory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
 			DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
-			Document document = documentBuilder.parse(new File(filename));
+			InputSource inputSource = new InputSource();
+			inputSource.setCharacterStream(new StringReader(text));
+			Document document = documentBuilder.parse(inputSource);
 			document.getDocumentElement().normalize();
 			NodeList list = document.getDocumentElement().getChildNodes();
 			for (int i = 0; i < list.getLength(); i++) {

@@ -8,19 +8,20 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class ImportCMDFileCommand implements IImportCommand {
 
 	@Override
-	public List<DriverCommand> importCommandSequence(String filename) {
+	public List<DriverCommand> importCommandSequence(String text) {
 		List<DriverCommand> commandList = new ArrayList<>();
-		try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
-			while (br.ready()) {
-				commandList.add(stringToCommand(br.readLine()));
+		Scanner scanner = new Scanner(text);
+		while (scanner.hasNextLine()) {
+			try {
+				commandList.add(stringToCommand(scanner.nextLine()));
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			return new ArrayList<>();
 		}
 		return commandList;
 	}

@@ -17,17 +17,12 @@ import java.util.List;
 public class ImportJSONFileCommand implements IImportCommand {
 
 	@Override
-	public List<DriverCommand> importCommandSequence(String filename) {
+	public List<DriverCommand> importCommandSequence(String text) {
 		List<DriverCommand> commandList = new ArrayList<>();
 		JSONParser jsonParser = new JSONParser();
 		try {
-			FileReader fileReader = new FileReader(filename);
-			JSONArray commandArray = (JSONArray) jsonParser.parse(fileReader);
+			JSONArray commandArray = (JSONArray) jsonParser.parse(text);
 			commandArray.forEach(jo -> commandList.add(getCommand((JSONObject) jo)));
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}

@@ -29,7 +29,7 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 	private JTextArea observerListField;
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 9204679248304669948L;
 
@@ -99,17 +99,16 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 		IImportCommand importCommand;
 		if (path.endsWith(".xml")) {
 			importCommand = new ImportXMLFileCommand();
-		}
-		else if (path.endsWith(".json")) {
+		} else if (path.endsWith(".json")) {
 			importCommand = new ImportJSONFileCommand();
-		}
-		else if (path.endsWith(".cmd")) {
+		} else if (path.endsWith(".cmd")) {
 			importCommand = new ImportCMDFileCommand();
-		}
-		else return;
-		List<DriverCommand> commandList = importCommand.importCommandSequence(path);
+		} else return;
+		String text = "VARIABLE WITH TEXT FROM FILE";
+		List<DriverCommand> commandList = importCommand.importCommandSequence(text);
 		commandManager.setCurrentCommand(commandList, fileChooser.getSelectedFile().getName());
 	}
+
 	public void updateCurrentCommandField() {
 		currentCommandField.setText(commandManager.getCurrentCommandString());
 	}
