@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -104,8 +105,8 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 		int returnValue = fileChooser.showOpenDialog(null);
 		if (returnValue != JFileChooser.APPROVE_OPTION) return;
 		String path = fileChooser.getSelectedFile().getAbsolutePath();
-		String[] elements = path.split(".");
-		String extension = elements[elements.length - 1];
+		String[] elements = path.split("\\.");
+		String extension = elements[elements.length - 1].toUpperCase();
 		IImportCommand importCommand = ImporterFactory.getImporter(IImportCommand.Type.valueOf(extension));
 		String text = getTextFromFile(path);
 		List<DriverCommand> commandList = importCommand.importCommandSequence(text);
