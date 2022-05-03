@@ -12,10 +12,7 @@ import javax.swing.filechooser.FileSystemView;
 import edu.kis.powp.appbase.gui.WindowComponent;
 import edu.kis.powp.jobs2d.command.ComplexCommand;
 import edu.kis.powp.jobs2d.command.DriverCommand;
-import edu.kis.powp.jobs2d.command.file.IImportCommand;
-import edu.kis.powp.jobs2d.command.file.ImportCMDFileCommand;
-import edu.kis.powp.jobs2d.command.file.ImportJSONFileCommand;
-import edu.kis.powp.jobs2d.command.file.ImportXMLFileCommand;
+import edu.kis.powp.jobs2d.command.file.*;
 import edu.kis.powp.jobs2d.command.manager.DriverCommandManager;
 import edu.kis.powp.observer.Subscriber;
 
@@ -96,14 +93,9 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 		int returnValue = fileChooser.showOpenDialog(null);
 		if (returnValue != JFileChooser.APPROVE_OPTION) return;
 		String path = fileChooser.getSelectedFile().getAbsolutePath();
-		IImportCommand importCommand;
-		if (path.endsWith(".xml")) {
-			importCommand = new ImportXMLFileCommand();
-		} else if (path.endsWith(".json")) {
-			importCommand = new ImportJSONFileCommand();
-		} else if (path.endsWith(".cmd")) {
-			importCommand = new ImportCMDFileCommand();
-		} else return;
+		String[] elements = path.split(".");
+		String extension = elements[elements.length - 1];
+		IImportCommand importCommand = ImporterFactory.getImporter(IImportCommand.Type.valueOf(extension));
 		String text = "VARIABLE WITH TEXT FROM FILE";
 		List<DriverCommand> commandList = importCommand.importCommandSequence(text);
 		commandManager.setCurrentCommand(commandList, fileChooser.getSelectedFile().getName());

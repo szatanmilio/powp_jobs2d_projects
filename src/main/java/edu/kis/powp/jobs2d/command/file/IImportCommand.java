@@ -7,4 +7,8 @@ import java.util.List;
 public interface IImportCommand {
 
 	List<DriverCommand> importCommandSequence(String filename);
+
+	enum Type {
+		CMD, JSON, XML;
+	}
 }
