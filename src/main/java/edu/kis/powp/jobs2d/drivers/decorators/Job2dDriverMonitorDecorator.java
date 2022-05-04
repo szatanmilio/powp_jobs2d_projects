@@ -2,7 +2,11 @@ package edu.kis.powp.jobs2d.drivers.decorators;
 
 import edu.kis.powp.jobs2d.Job2dDriver;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public final class Job2dDriverMonitorDecorator extends BaseJob2dDriverDecorator {
+	private final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 	private double totalDistanceTraveled;
 	private double operationalDistanceTraveled;
 	private int startX, startY;
@@ -17,7 +21,9 @@ public final class Job2dDriverMonitorDecorator extends BaseJob2dDriverDecorator 
 	@Override
 	public void setPosition(int x, int y) {
 		wrappedDriver.setPosition(x, y);
-		totalDistanceTraveled += calculateDistance(startX, startY, x, y);
+		double distanceTraveled = calculateDistance(startX, startY, x, y);
+		totalDistanceTraveled += distanceTraveled;
+		logger.log(Level.INFO, "Glowica przesunela sie o : " + distanceTraveled + "\nCalkowite przesuniecie glowicy to : " + totalDistanceTraveled);
 		setStartingPos(x, y);
 	}
 
@@ -27,6 +33,9 @@ public final class Job2dDriverMonitorDecorator extends BaseJob2dDriverDecorator 
 		double distanceTraveled = calculateDistance(startX, startY, x, y);
 		totalDistanceTraveled += distanceTraveled;
 		operationalDistanceTraveled += distanceTraveled;
+		logger.log(Level.INFO, "Glowica przesunela sie o : " + distanceTraveled + "\nCalkowite przesuniecie glowicy to : " + totalDistanceTraveled);
+		logger.log(Level.INFO, "Glowica wykonala prace o dlugosci : " + distanceTraveled + "\nCalkowita dlugosc pracy glowicy to : " + operationalDistanceTraveled);
+
 		setStartingPos(x, y);
 	}
 
