@@ -13,8 +13,14 @@ import edu.kis.powp.jobs2d.command.gui.CommandManagerWindowCommandChangeObserver
 import edu.kis.powp.jobs2d.command.visitor.TestVisitor;
 import edu.kis.powp.jobs2d.drivers.adapter.LineDriverAdapter;
 import edu.kis.powp.jobs2d.drivers.gui.DriverUpdateInfoObserver;
-import edu.kis.powp.jobs2d.events.*;
+import edu.kis.powp.jobs2d.events.SelectLoadSecretCommandOptionListener;
+import edu.kis.powp.jobs2d.events.SelectRunCurrentCommandOptionListener;
+import edu.kis.powp.jobs2d.events.SelectTestFigure2OptionListener;
+import edu.kis.powp.jobs2d.events.SelectTestFigureOptionListener;
+import edu.kis.powp.jobs2d.events.SelectTestVisitorOptionListner;
+import edu.kis.powp.jobs2d.factories.ComplexCommandFactory;
 import edu.kis.powp.jobs2d.features.CommandsFeature;
+import edu.kis.powp.jobs2d.features.DrawOnFreePanelFeature;
 import edu.kis.powp.jobs2d.features.DrawerFeature;
 import edu.kis.powp.jobs2d.features.DriverFeature;
 
@@ -27,13 +33,19 @@ public class TestJobs2dApp {
 	 * @param application Application context.
 	 */
 	private static void setupPresetTests(Application application) {
-		SelectTestFigureOptionListener selectTestFigureOptionListener = new SelectTestFigureOptionListener(
+		SelectTestFigureOptionListener figure1 = new SelectTestFigureOptionListener(
+				DriverFeature.getDriverManager(), ComplexCommandFactory.TestShape.FIGURE1);
+		SelectTestFigure2OptionListener figure2 = new SelectTestFigure2OptionListener(
 				DriverFeature.getDriverManager());
-		SelectTestFigure2OptionListener selectTestFigure2OptionListener = new SelectTestFigure2OptionListener(
-				DriverFeature.getDriverManager());
+		SelectTestFigureOptionListener rectangle = new SelectTestFigureOptionListener(
+				DriverFeature.getDriverManager(), ComplexCommandFactory.TestShape.RECTANGLE);
+		SelectTestFigureOptionListener star = new SelectTestFigureOptionListener(
+				DriverFeature.getDriverManager(), ComplexCommandFactory.TestShape.STAR);
 
-		application.addTest("Figure Joe 1", selectTestFigureOptionListener);
-		application.addTest("Figure Joe 2", selectTestFigure2OptionListener);
+		application.addTest("Figure Joe 1", figure1);
+		application.addTest("Figure Joe 2", figure2);
+		application.addTest("Rectangle", rectangle);
+		application.addTest("Star", star);
 	}
 
 	/**
@@ -119,6 +131,8 @@ public class TestJobs2dApp {
 				setupLogger(app);
 				setupWindows(app);
 				setupVisitorTests(app);
+
+				DrawOnFreePanelFeature.setupButtonClick(app, DriverFeature.getDriverManager());
 
 				app.setVisibility(true);
 			}
