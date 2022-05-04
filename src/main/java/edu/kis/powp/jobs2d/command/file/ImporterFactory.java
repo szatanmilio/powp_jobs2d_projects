@@ -12,7 +12,7 @@ public class ImporterFactory {
 			case XML:
 				return new ImportXMLFileCommand();
 			default:
-				throw new IllegalArgumentException();
+				throw new IllegalArgumentException("File format not supported!");
 		}
 	}
 }

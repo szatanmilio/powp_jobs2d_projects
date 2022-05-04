@@ -24,27 +24,7 @@ public class ImportXMLFileCommand implements IImportCommand {
 	private final List<DriverCommand> commandList = new ArrayList<>();
 
 	@Override
-	public List<DriverCommand> importCommandSequence(String filename) {
-		processText(filename);
-		return commandList;
-	}
-
-	private void addCommand(String commandName, String x, String y) {
-		int xValue = Integer.parseInt(x);
-		int yValue = Integer.parseInt(y);
-		switch (commandName) {
-			case "OperateTo":
-				commandList.add(new OperateToCommand(xValue, yValue));
-				break;
-			case "SetPosition":
-				commandList.add(new SetPositionCommand(xValue, yValue));
-				break;
-			default:
-				throw new IllegalArgumentException("Command not supported!");
-		}
-	}
-
-	private void processText(String text) {
+	public List<DriverCommand> importCommandSequence(String text) {
 		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
 		try {
 			documentBuilderFactory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
@@ -66,5 +46,22 @@ public class ImportXMLFileCommand implements IImportCommand {
 		} catch (ParserConfigurationException | SAXException | IOException e) {
 			e.printStackTrace();
 		}
+		return commandList;
 	}
+
+	private void addCommand(String commandName, String x, String y) {
+		int xValue = Integer.parseInt(x);
+		int yValue = Integer.parseInt(y);
+		switch (commandName) {
+			case "OperateTo":
+				commandList.add(new OperateToCommand(xValue, yValue));
+				break;
+			case "SetPosition":
+				commandList.add(new SetPositionCommand(xValue, yValue));
+				break;
+			default:
+				throw new IllegalArgumentException("Command not supported!");
+		}
+	}
+
 }

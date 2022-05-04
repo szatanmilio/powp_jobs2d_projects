@@ -7,7 +7,6 @@ import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -16,7 +15,8 @@ import javax.swing.filechooser.FileSystemView;
 
 import edu.kis.powp.appbase.gui.WindowComponent;
 import edu.kis.powp.jobs2d.command.DriverCommand;
-import edu.kis.powp.jobs2d.command.file.*;
+import edu.kis.powp.jobs2d.command.file.IImportCommand;
+import edu.kis.powp.jobs2d.command.file.ImporterFactory;
 import edu.kis.powp.jobs2d.command.manager.DriverCommandManager;
 import edu.kis.powp.observer.Subscriber;
 
@@ -107,10 +107,14 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 		String path = fileChooser.getSelectedFile().getAbsolutePath();
 		String[] elements = path.split("\\.");
 		String extension = elements[elements.length - 1].toUpperCase();
-		IImportCommand importCommand = ImporterFactory.getImporter(IImportCommand.Type.valueOf(extension));
-		String text = getTextFromFile(path);
-		List<DriverCommand> commandList = importCommand.importCommandSequence(text);
-		commandManager.setCurrentCommand(commandList, fileChooser.getSelectedFile().getName());
+		try {
+			IImportCommand importCommand = ImporterFactory.getImporter(IImportCommand.Type.valueOf(extension));
+			String text = getTextFromFile(path);
+			List<DriverCommand> commandList = importCommand.importCommandSequence(text);
+			commandManager.setCurrentCommand(commandList, fileChooser.getSelectedFile().getName());
+		} catch (IllegalArgumentException e) {
+			JOptionPane.showMessageDialog(null, "Error during parsing file!", "Error", JOptionPane.ERROR_MESSAGE);
+		}
 	}
 
 	public void updateCurrentCommandField() {
