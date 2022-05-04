@@ -12,9 +12,9 @@ public interface DriverCommand extends Cloneable {
 	 * 
 	 * @param driver driver.
 	 */
-	public void execute(Job2dDriver job2dDriver);
+	void execute(Job2dDriver job2dDriver);
 
-	public default Object clone() throws CloneNotSupportedException {
-		return this.clone();
+	default DriverCommand driverCommandClone() throws CloneNotSupportedException {
+		return this.driverCommandClone();
 	}
 }

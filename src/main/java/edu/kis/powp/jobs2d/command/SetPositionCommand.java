@@ -21,7 +21,7 @@ public class SetPositionCommand implements DriverCommand {
 	}
 
 	@Override
-	public SetPositionCommand clone() {
+	public SetPositionCommand driverCommandClone() {
 		return new SetPositionCommand(this.posX, this.posY);
 	}
 }

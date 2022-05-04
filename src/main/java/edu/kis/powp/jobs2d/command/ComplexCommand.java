@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.kis.powp.jobs2d.Job2dDriver;
-import edu.kis.powp.jobs2d.command.DriverCommand;
 
 public class ComplexCommand implements DriverCommand {
 
@@ -28,11 +27,12 @@ public class ComplexCommand implements DriverCommand {
 	}
 
 	@Override
-	public ComplexCommand clone() throws CloneNotSupportedException {
-		ComplexCommand tempCommand = new ComplexCommand();
+	public ComplexCommand driverCommandClone() throws CloneNotSupportedException {
+		ComplexCommand tempComplexCommand = new ComplexCommand();
 		for(DriverCommand driverCommand : this.commands) {
-			tempCommand.appendCommand(driverCommand);
+			DriverCommand tempDriverCommand = driverCommand.driverCommandClone();
+			tempComplexCommand.appendCommand(tempDriverCommand);
 		}
-		return tempCommand;
+		return tempComplexCommand;
 	}
 }

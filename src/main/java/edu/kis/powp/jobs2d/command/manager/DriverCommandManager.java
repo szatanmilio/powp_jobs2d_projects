@@ -4,7 +4,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import edu.kis.powp.jobs2d.Job2dDriver;
-import edu.kis.powp.jobs2d.command.DeepCopy.CommandCloner;
 import edu.kis.powp.jobs2d.command.DriverCommand;
 import edu.kis.powp.jobs2d.command.ICompoundCommand;
 import edu.kis.powp.observer.Publisher;
@@ -12,7 +11,7 @@ import edu.kis.powp.observer.Publisher;
 /**
  * Driver command Manager.
  */
-public class DriverCommandManager implements CommandCloner {
+public class DriverCommandManager {
 	private DriverCommand currentCommand = null;
 
 	private Publisher changePublisher = new Publisher();
@@ -80,10 +79,4 @@ public class DriverCommandManager implements CommandCloner {
 		return changePublisher;
 	}
 
-	@Override
-	public Object clone() {
-		DriverCommandManager copy = new DriverCommandManager();
-		copy.setCurrentCommand(this.currentCommand);
-		return copy;
-	}
 }
