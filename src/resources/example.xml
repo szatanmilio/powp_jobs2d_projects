@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<CommandList>
+    <SetPosition x="-200" y="-200"/>
+    <OperateTo x="-200" y="200"/>
+    <OperateTo x="100" y="-200"/>
+    <OperateTo x="-200" y="-200"/>
+</CommandList>

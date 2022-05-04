@@ -1,0 +1,30 @@
+[
+  {
+    "name": "SetPosition",
+    "position": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "name": "OperateTo",
+    "position": {
+      "x": 50,
+      "y": 0
+    }
+  },
+  {
+    "name": "OperateTo",
+    "position": {
+      "x": 50,
+      "y": 50
+    }
+  },
+  {
+    "name": "OperateTo",
+    "position": {
+      "x": 0,
+      "y": 0
+    }
+  }
+]
