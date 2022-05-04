@@ -5,7 +5,7 @@ import edu.kis.powp.jobs2d.Job2dDriver;
 /**
  * DriverCommand interface.
  */
-public interface DriverCommand extends Cloneable {
+public interface DriverCommand {
 
 	/**
 	 * Execute command on driver.
@@ -14,7 +14,7 @@ public interface DriverCommand extends Cloneable {
 	 */
 	void execute(Job2dDriver job2dDriver);
 
-	default DriverCommand driverCommandClone() throws CloneNotSupportedException {
+	default DriverCommand driverCommandClone() {
 		return this.driverCommandClone();
 	}
 }

@@ -27,7 +27,7 @@ public class ComplexCommand implements DriverCommand {
 	}
 
 	@Override
-	public ComplexCommand driverCommandClone() throws CloneNotSupportedException {
+	public ComplexCommand driverCommandClone() {
 		ComplexCommand tempComplexCommand = new ComplexCommand();
 		for(DriverCommand driverCommand : this.commands) {
 			DriverCommand tempDriverCommand = driverCommand.driverCommandClone();

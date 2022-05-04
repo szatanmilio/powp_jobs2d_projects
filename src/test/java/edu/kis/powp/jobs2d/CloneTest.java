@@ -10,7 +10,7 @@ import static org.junit.Assert.assertEquals;
 public class CloneTest {
 
 	@Test
-	public void testClone () throws CloneNotSupportedException {
+	public void testClone () {
 
 		OperateToCommand operateToCommand = new OperateToCommand(10, 20);
 		OperateToCommand copyOfOperateToCommand = operateToCommand.driverCommandClone();
