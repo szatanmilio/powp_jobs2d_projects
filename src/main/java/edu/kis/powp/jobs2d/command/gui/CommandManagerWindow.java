@@ -4,13 +4,19 @@ import java.awt.Container;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
+import java.util.stream.Stream;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JTextArea;
+import javax.swing.*;
+import javax.swing.filechooser.FileSystemView;
 
 import edu.kis.powp.appbase.gui.WindowComponent;
+import edu.kis.powp.jobs2d.command.DriverCommand;
+import edu.kis.powp.jobs2d.command.file.IImportCommand;
+import edu.kis.powp.jobs2d.command.file.ImporterFactory;
 import edu.kis.powp.jobs2d.command.manager.DriverCommandManager;
 import edu.kis.powp.observer.Subscriber;
 
@@ -24,13 +30,13 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 	private JTextArea observerListField;
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 9204679248304669948L;
 
 	public CommandManagerWindow(DriverCommandManager commandManager) {
 		this.setTitle("Command Manager");
-		this.setSize(400, 400);
+		this.setSize(400, 600);
 		Container content = this.getContentPane();
 		content.setLayout(new GridBagLayout());
 
@@ -56,6 +62,14 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 		content.add(currentCommandField, c);
 		updateCurrentCommandField();
 
+		JButton btnImportCommand = new JButton("Import command");
+		btnImportCommand.addActionListener((ActionEvent e) -> this.importCommandSequence());
+		c.fill = GridBagConstraints.BOTH;
+		c.weightx = 1;
+		c.gridx = 0;
+		c.weighty = 1;
+		content.add(btnImportCommand, c);
+
 		JButton btnClearCommand = new JButton("Clear command");
 		btnClearCommand.addActionListener((ActionEvent e) -> this.clearCommand());
 		c.fill = GridBagConstraints.BOTH;
@@ -76,6 +90,31 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 	private void clearCommand() {
 		commandManager.clearCurrentCommand();
 		updateCurrentCommandField();
+	}
+	private String getTextFromFile(String filename) {
+		StringBuilder contentBuilder = new StringBuilder();
+		try (Stream<String> stream = Files.lines(Paths.get(filename))) {
+			stream.forEach(s -> contentBuilder.append(s).append("\n"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return contentBuilder.toString();
+	}
+	private void importCommandSequence() {
+		JFileChooser fileChooser = new JFileChooser(FileSystemView.getFileSystemView().getDefaultDirectory());
+		int returnValue = fileChooser.showOpenDialog(null);
+		if (returnValue != JFileChooser.APPROVE_OPTION) return;
+		String path = fileChooser.getSelectedFile().getAbsolutePath();
+		String[] elements = path.split("\\.");
+		String extension = elements[elements.length - 1].toUpperCase();
+		try {
+			IImportCommand importCommand = ImporterFactory.getImporter(IImportCommand.Type.valueOf(extension));
+			String text = getTextFromFile(path);
+			List<DriverCommand> commandList = importCommand.importCommandSequence(text);
+			commandManager.setCurrentCommand(commandList, fileChooser.getSelectedFile().getName());
+		} catch (IllegalArgumentException e) {
+			JOptionPane.showMessageDialog(null, "Error during parsing file!", "Error", JOptionPane.ERROR_MESSAGE);
+		}
 	}
 
 	public void updateCurrentCommandField() {
