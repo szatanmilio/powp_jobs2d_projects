@@ -2,5 +2,6 @@
 /doc/
 /.classpath
 /.project
+/.vscode
 .settings
 /.idea
