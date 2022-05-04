@@ -1,15 +1,15 @@
 package edu.kis.powp.jobs2d.command;
 
 import edu.kis.powp.jobs2d.Job2dDriver;
-import edu.kis.powp.jobs2d.command.visitor.IElement;
-import edu.kis.powp.jobs2d.command.visitor.IVisitor;
+import edu.kis.powp.jobs2d.command.visitor.IDriverCommandsVisitor;
 
 /**
  * Implementation of Job2dDriverCommand for operateTo command functionality.
  */
 public class OperateToCommand implements DriverCommand {
 
-	private int posX, posY;
+	private final int posX;
+	private final int posY;
 
 	public OperateToCommand(int posX, int posY) {
 		super();
@@ -23,7 +23,7 @@ public class OperateToCommand implements DriverCommand {
 	}
 
 	@Override
-	public void accept(IVisitor visitor) {
+	public void accept(IDriverCommandsVisitor visitor) {
 		visitor.doForOperateToCommand(this);
 	}
 

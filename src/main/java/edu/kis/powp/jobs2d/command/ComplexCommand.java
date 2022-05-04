@@ -1,15 +1,15 @@
 package edu.kis.powp.jobs2d.command;
 
+import edu.kis.powp.jobs2d.Job2dDriver;
+import edu.kis.powp.jobs2d.command.visitor.IDriverCommandsVisitor;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import edu.kis.powp.jobs2d.Job2dDriver;
-import edu.kis.powp.jobs2d.command.visitor.IVisitor;
-
 public class ComplexCommand implements ICompoundCommand {
 
-	private List<DriverCommand> commands;
+	private final List<DriverCommand> commands;
 
 	public ComplexCommand() {
 		this.commands = new ArrayList<>();
@@ -31,7 +31,7 @@ public class ComplexCommand implements ICompoundCommand {
 	}
 
 	@Override
-	public void accept(IVisitor visitor) {
+	public void accept(IDriverCommandsVisitor visitor) {
 		visitor.doForCompoundCommand(this);
 	}
 
