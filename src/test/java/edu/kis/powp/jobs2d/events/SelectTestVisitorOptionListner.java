@@ -22,7 +22,7 @@ public class SelectTestVisitorOptionListner implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		try{
+		try {
 			CommandsFeature.getDriverCommandManager().getCurrentCommand().accept(this.visitor);
 			this.visitor.logResults();
 		} catch (NullPointerException ex) {
