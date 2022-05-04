@@ -1,12 +1,11 @@
 package edu.kis.powp.jobs2d.command;
 
 import edu.kis.powp.jobs2d.Job2dDriver;
-import edu.kis.powp.jobs2d.command.DeepCopy.CommandCloner;
 
 /**
  * Implementation of Job2dDriverCommand for operateTo command functionality.
  */
-public class OperateToCommand implements DriverCommand, CommandCloner {
+public class OperateToCommand implements DriverCommand {
 
 	private int posX, posY;
 
@@ -22,7 +21,7 @@ public class OperateToCommand implements DriverCommand, CommandCloner {
 	}
 
 	@Override
-	public Object clone() {
+	public OperateToCommand clone() {
 		return new OperateToCommand(this.posX, this.posY);
 	}
 }

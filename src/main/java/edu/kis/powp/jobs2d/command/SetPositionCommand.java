@@ -1,12 +1,11 @@
 package edu.kis.powp.jobs2d.command;
 
 import edu.kis.powp.jobs2d.Job2dDriver;
-import edu.kis.powp.jobs2d.command.DeepCopy.CommandCloner;
 
 /**
  * Implementation of Job2dDriverCommand for setPosition command functionality.
  */
-public class SetPositionCommand implements DriverCommand, CommandCloner {
+public class SetPositionCommand implements DriverCommand {
 
 	private int posX, posY;
 
@@ -22,7 +21,7 @@ public class SetPositionCommand implements DriverCommand, CommandCloner {
 	}
 
 	@Override
-	public Object clone() {
+	public SetPositionCommand clone() {
 		return new SetPositionCommand(this.posX, this.posY);
 	}
 }
