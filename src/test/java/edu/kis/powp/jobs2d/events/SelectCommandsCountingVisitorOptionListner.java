@@ -8,11 +8,11 @@ import java.awt.event.ActionListener;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class SelectTestVisitorOptionListner implements ActionListener {
+public class SelectCommandsCountingVisitorOptionListner implements ActionListener {
 	private final CommandCountingVisitor visitor;
 	private final Logger logger;
 
-	public SelectTestVisitorOptionListner(Logger logger, CommandCountingVisitor visitor) {
+	public SelectCommandsCountingVisitorOptionListner(Logger logger, CommandCountingVisitor visitor) {
 		this.logger = logger;
 		this.visitor = visitor;
 	}
