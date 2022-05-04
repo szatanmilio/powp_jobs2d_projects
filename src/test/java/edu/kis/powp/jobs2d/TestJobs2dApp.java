@@ -61,7 +61,7 @@ public class TestJobs2dApp {
 	}
 
 	private static void setupVisitorTests(Application application) {
-		application.addTest("Test Counting Visitor", new SelectTestVisitorOptionListner(new TestVisitor(logger)));
+		application.addTest("Test Counting Visitor", new SelectTestVisitorOptionListner(logger, new TestVisitor(logger)));
 	}
 
 	/**
