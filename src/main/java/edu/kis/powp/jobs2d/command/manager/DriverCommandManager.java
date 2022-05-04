@@ -18,7 +18,7 @@ public class DriverCommandManager {
 
 	/**
 	 * Set current command.
-	 * 
+	 *
 	 * @param commandList Set the command as current.
 	 */
 	public synchronized void setCurrentCommand(DriverCommand commandList) {
@@ -28,7 +28,7 @@ public class DriverCommandManager {
 
 	/**
 	 * Set current command.
-	 * 
+	 *
 	 * @param commandList list of commands representing a compound command.
 	 * @param name        name of the command.
 	 */
@@ -49,7 +49,11 @@ public class DriverCommandManager {
 
 			@Override
 			public String toString() {
-				return name;
+				StringBuilder stringBuilder = new StringBuilder(name + '\n');
+				for (DriverCommand dc : commandList) {
+					stringBuilder.append(dc.toString()).append("\n");
+				}
+				return stringBuilder.toString();
 			}
 		});
 
@@ -57,7 +61,7 @@ public class DriverCommandManager {
 
 	/**
 	 * Return current command.
-	 * 
+	 *
 	 * @return Current command.
 	 */
 	public synchronized DriverCommand getCurrentCommand() {

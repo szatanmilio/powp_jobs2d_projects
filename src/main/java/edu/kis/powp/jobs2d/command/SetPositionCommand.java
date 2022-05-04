@@ -20,4 +20,11 @@ public class SetPositionCommand implements DriverCommand {
 		driver.setPosition(posX, posY);
 	}
 
+
+	@Override
+	public String toString() {
+		return "Set Position\t" +
+				"X=" + posX +
+				"\tY=" + posY;
+	}
 }
