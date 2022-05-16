@@ -52,7 +52,6 @@ public final class Job2dDriverUsageMonitorDecorator extends BaseJob2dDriverDecor
 		startY = y;
 	}
 
-	// ze wzoru na odleglosc miedzy dwoma punktami
 	private double calculateDistance(int startX, int startY, int x, int y) {
 		return Math.sqrt(Math.pow(x - startX, 2) + Math.pow(y - startY, 2));
 	}
