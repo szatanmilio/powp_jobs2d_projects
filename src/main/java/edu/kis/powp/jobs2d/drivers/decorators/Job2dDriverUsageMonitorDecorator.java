@@ -39,6 +39,14 @@ public final class Job2dDriverUsageMonitorDecorator extends BaseJob2dDriverDecor
 		setStartingPos(x, y);
 	}
 
+	public double getTotalDistanceTraveled() {
+		return totalDistanceTraveled;
+	}
+
+	public double getOperationalDistanceTraveled() {
+		return operationalDistanceTraveled;
+	}
+
 	private void setStartingPos(int x, int y) {
 		startX = x;
 		startY = y;
