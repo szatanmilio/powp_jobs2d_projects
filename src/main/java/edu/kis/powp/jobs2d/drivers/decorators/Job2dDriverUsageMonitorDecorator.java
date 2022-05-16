@@ -5,13 +5,13 @@ import edu.kis.powp.jobs2d.Job2dDriver;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public final class Job2dDriverMonitorDecorator extends BaseJob2dDriverDecorator {
+public final class Job2dDriverUsageMonitorDecorator extends BaseJob2dDriverDecorator {
 	private final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 	private double totalDistanceTraveled;
 	private double operationalDistanceTraveled;
 	private int startX, startY;
 
-	public Job2dDriverMonitorDecorator(Job2dDriver wrappedDriver) {
+	public Job2dDriverUsageMonitorDecorator(Job2dDriver wrappedDriver) {
 		super(wrappedDriver);
 		totalDistanceTraveled = 0;
 		operationalDistanceTraveled = 0;
