@@ -44,7 +44,7 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 
 	public CommandManagerWindow(DriverCommandManager commandManager) {
 		this.setTitle("Command Manager");
-		this.setSize(1000, 600);
+		this.setSize(1200, 600);
 		Container content = this.getContentPane();
 		content.setLayout(new GridBagLayout());
 		this.commandManager = commandManager;
@@ -55,7 +55,10 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 		c.fill = GridBagConstraints.BOTH;
 		c.weightx = 1;
 		c.gridx = 0;
+		c.gridy = 0;
 		c.weighty = 1;
+		c.gridheight = 1;
+		c.gridwidth = 1;
 		content.add(observerListField, c);
 		updateObserverListField();
 
@@ -64,7 +67,10 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 		c.fill = GridBagConstraints.BOTH;
 		c.weightx = 1;
 		c.gridx = 0;
+		c.gridy = 1;
 		c.weighty = 1;
+		c.gridheight = 1;
+		c.gridwidth = 1;
 		content.add(currentCommandField, c);
 		updateCurrentCommandField();
 
@@ -75,7 +81,10 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 		c.fill = GridBagConstraints.BOTH;
 		c.weightx = 10;
 		c.gridx = 1;
-		c.weighty = 20;
+		c.gridy = 0;
+		c.weighty = 1;
+		c.gridheight = 5;
+		c.gridwidth = 1;
 		content.add(previewPanel, c);
 		preview = new CommandManagerPreview(previewPanel, new BasicLine());
 
@@ -83,16 +92,22 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 		btnImportCommand.addActionListener((ActionEvent e) -> this.importCommandSequence());
 		c.fill = GridBagConstraints.BOTH;
 		c.weightx = 1;
-		c.gridx = 1;
+		c.gridx = 0;
+		c.gridy = 2;
 		c.weighty = 1;
+		c.gridheight = 1;
+		c.gridwidth = 1;
 		content.add(btnImportCommand, c);
 
 		JButton btnClearCommand = new JButton("Clear command");
 		btnClearCommand.addActionListener((ActionEvent e) -> this.clearCommand());
 		c.fill = GridBagConstraints.BOTH;
 		c.weightx = 1;
-		c.gridx = 1;
+		c.gridx = 0;
+		c.gridy = 3;
 		c.weighty = 1;
+		c.gridheight = 1;
+		c.gridwidth = 1;
 		content.add(btnClearCommand, c);
 
 		JButton btnClearObservers = new JButton("Delete observers");
@@ -100,7 +115,10 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 		c.fill = GridBagConstraints.BOTH;
 		c.weightx = 1;
 		c.gridx = 0;
+		c.gridy = 4;
 		c.weighty = 1;
+		c.gridheight = 1;
+		c.gridwidth = 1;
 		content.add(btnClearObservers, c);
 	}
 
