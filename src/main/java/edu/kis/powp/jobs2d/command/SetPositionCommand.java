@@ -1,6 +1,7 @@
 package edu.kis.powp.jobs2d.command;
 
 import edu.kis.powp.jobs2d.Job2dDriver;
+import edu.kis.powp.jobs2d.command.visitor.ComplexCommandTransformationVisitor;
 import edu.kis.powp.jobs2d.command.visitor.IDriverCommandsVisitor;
 
 /**
@@ -37,5 +38,10 @@ public class SetPositionCommand implements DriverCommand {
 	@Override
 	public void accept(IDriverCommandsVisitor visitor) {
 		visitor.doForSetPositionCommand(this);
+	}
+
+	@Override
+	public void accept(ComplexCommandTransformationVisitor visitor) {
+		visitor.visit(this);
 	}
 }
