@@ -49,24 +49,12 @@ public class CommandCountingVisitor implements IDriverCommandsVisitor {
 		return operateToCommandCount;
 	}
 
-	public void setOperateToCommandCount(int operateToCommandCount) {
-		this.operateToCommandCount = operateToCommandCount;
-	}
-
 	public int getSetPositionCommandCount() {
 		return setPositionCommandCount;
 	}
 
-	public void setSetPositionCommandCount(int setPositionCommandCount) {
-		this.setPositionCommandCount = setPositionCommandCount;
-	}
-
 	public int getCompoundCommandCount() {
 		return compoundCommandCount;
-	}
-
-	public void setCompoundCommandCount(int compoundCommandCount) {
-		this.compoundCommandCount = compoundCommandCount;
 	}
 
 	public int getCommandsTotalCount() {
