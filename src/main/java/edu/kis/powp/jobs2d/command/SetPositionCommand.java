@@ -28,6 +28,13 @@ public class SetPositionCommand implements DriverCommand {
 	}
 
   @Override
+	public String toString() {
+		return "Set Position\t" +
+				"X=" + posX +
+				"\tY=" + posY;
+	}
+
+	@Override
 	public void accept(IDriverCommandsVisitor visitor) {
 		visitor.doForSetPositionCommand(this);
 	}

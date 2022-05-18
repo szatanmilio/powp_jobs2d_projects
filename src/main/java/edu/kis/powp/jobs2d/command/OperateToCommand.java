@@ -22,6 +22,12 @@ public class OperateToCommand implements DriverCommand {
 		driver.operateTo(posX, posY);
 	}
 
+	public String toString() {
+		return "Operate To\t" +
+				"X=" + posX +
+				"\tY=" + posY;
+	}
+
 	@Override
 	public OperateToCommand driverCommandClone() {
 		return new OperateToCommand(this.posX, this.posY);
