@@ -1,12 +1,13 @@
 package edu.kis.powp.jobs2d.command.manager;
 
-import java.util.Iterator;
-import java.util.List;
-
 import edu.kis.powp.jobs2d.Job2dDriver;
 import edu.kis.powp.jobs2d.command.DriverCommand;
 import edu.kis.powp.jobs2d.command.ICompoundCommand;
+import edu.kis.powp.jobs2d.command.visitor.IDriverCommandsVisitor;
 import edu.kis.powp.observer.Publisher;
+
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Driver command Manager.
@@ -54,6 +55,11 @@ public class DriverCommandManager {
 					stringBuilder.append(dc.toString()).append("\n");
 				}
 				return stringBuilder.toString();
+			}
+
+			@Override
+			public void accept(IDriverCommandsVisitor visitor) {
+				visitor.doForCompoundCommand(this);
 			}
 		});
 
