@@ -50,11 +50,7 @@ public class DriverCommandManager {
 
 			@Override
 			public String toString() {
-				StringBuilder stringBuilder = new StringBuilder(name + '\n');
-				for (DriverCommand dc : commandList) {
-					stringBuilder.append(dc.toString()).append("\n");
-				}
-				return stringBuilder.toString();
+				return name;
 			}
 
 			@Override
