@@ -13,7 +13,7 @@ public class DriverComposite implements Job2dDriver {
 	}
 
 	public DriverComposite(){
-		List<Job2dDriver> driverList = new ArrayList<Job2dDriver>();
+		this.driverList = new ArrayList<Job2dDriver>();
 	}
 
 	public void addDriver(Job2dDriver driver){

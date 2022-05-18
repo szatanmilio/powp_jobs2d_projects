@@ -74,8 +74,7 @@ public class TestJobs2dApp {
 	 * @param application Application context.
 	 */
 	private static void setupDrivers(Application application) {
-		List<Job2dDriver> driverList = new ArrayList<>();
-		DriverComposite driverComposite = new DriverComposite(driverList);
+		DriverComposite driverComposite = new DriverComposite();
 		DriverFeature.addDriver("Line, Logger, Special Simulators", driverComposite);
 
 		DriverUpdateInfoObserver observer = new DriverUpdateInfoObserver();
