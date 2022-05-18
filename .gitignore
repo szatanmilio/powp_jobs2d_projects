@@ -2,6 +2,7 @@
 /doc/
 /.classpath
 /.project
-.settings
-.idea
+/.vscode
+/.settings
+/.idea
 jobs2d.iml
