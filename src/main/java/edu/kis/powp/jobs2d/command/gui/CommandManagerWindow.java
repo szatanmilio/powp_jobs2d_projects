@@ -36,7 +36,7 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 	private String observerListString;
 	private JTextArea observerListField;
 	private JPanel previewPanel;
-
+	private CommandManagerPreview preview;
 	/**
 	 *
 	 */
@@ -77,7 +77,7 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 		c.gridx = 1;
 		c.weighty = 20;
 		content.add(previewPanel, c);
-
+		preview = new CommandManagerPreview(previewPanel, new BasicLine());
 
 		JButton btnImportCommand = new JButton("Import command");
 		btnImportCommand.addActionListener((ActionEvent e) -> this.importCommandSequence());
@@ -102,15 +102,6 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 		c.gridx = 0;
 		c.weighty = 1;
 		content.add(btnClearObservers, c);
-	}
-
-	private void updatePanelPreview(List<DriverCommand> commandList) {
-		DrawPanelController dpc = new DrawPanelController();
-		dpc.initialize(previewPanel);
-		LineDriverAdapter lda = new LineDriverAdapter(dpc, new BasicLine(), "Preview");
-		for (DriverCommand dc : commandList) {
-			dc.execute(lda);
-		}
 	}
 
 	private void clearCommand() {
@@ -140,7 +131,7 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 			String text = getTextFromFile(path);
 			List<DriverCommand> commandList = importCommand.importCommandSequence(text);
 			commandManager.setCurrentCommand(commandList, fileChooser.getSelectedFile().getName());
-			updatePanelPreview(commandList);
+			preview.update(commandList);
 		} catch (IllegalArgumentException e) {
 			JOptionPane.showMessageDialog(null, "Error during parsing file!", "Error", JOptionPane.ERROR_MESSAGE);
 		}
