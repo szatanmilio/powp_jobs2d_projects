@@ -1,9 +1,12 @@
 package edu.kis.powp.jobs2d;
 
 import edu.kis.powp.jobs2d.command.ComplexCommand;
+import edu.kis.powp.jobs2d.command.DriverCommand;
 import edu.kis.powp.jobs2d.command.OperateToCommand;
 import edu.kis.powp.jobs2d.command.SetPositionCommand;
 import org.junit.Test;
+
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
@@ -24,6 +27,12 @@ public class CloneTest {
 		complexCommand.appendCommand(operateToCommand);
 		complexCommand.appendCommand(setPositionCommand);
 		ComplexCommand copyOfComplexCommand = complexCommand.driverCommandClone();
+		List<DriverCommand> commandList =  copyOfComplexCommand.getCommandList();
+		assertEquals(commandList.get(0).equals(operateToCommand), false);
+		assertEquals(commandList.get(1).equals(operateToCommand), false);
+		assertEquals(commandList.get(0).equals(setPositionCommand), false);
+		assertEquals(commandList.get(1).equals(setPositionCommand), false);
+
 		assertEquals(copyOfComplexCommand.equals(complexCommand), false);
 	}
 }

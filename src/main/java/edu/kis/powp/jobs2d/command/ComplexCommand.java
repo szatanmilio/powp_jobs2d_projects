@@ -18,6 +18,10 @@ public class ComplexCommand implements DriverCommand {
 		this.commands.add(command);
 	}
 
+	public List<DriverCommand> getCommandList () {
+		return commands;
+	}
+
 	@Override
 	public void execute(Job2dDriver job2dDriver) {
 		for(DriverCommand command: commands)
