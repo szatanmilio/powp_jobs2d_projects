@@ -9,14 +9,14 @@ import edu.kis.powp.jobs2d.Job2dDriver;
 
 public class ComplexCommand implements ICompoundCommand {
 
-	private final List <DriverCommand> commands;
+	private final List<DriverCommand> commands;
 
 	public ComplexCommand() {
 		this.commands = new ArrayList<>();
 	}
 
-	public ComplexCommand(ArrayList<DriverCommand> driverCommands) {
-		this.commands = new ArrayList<>(driverCommands);
+	public ComplexCommand(List<DriverCommand> driverCommands) {
+		this.commands = driverCommands;
 	}
 
 	@Override
@@ -35,7 +35,7 @@ public class ComplexCommand implements ICompoundCommand {
 
 		private final List<DriverCommand> commandList = new ArrayList<>();
 
-		public Builder add(DriverCommand command) {
+		public Builder addCommand(DriverCommand command) {
 			commandList.add(command);
 			return this;
 		}
