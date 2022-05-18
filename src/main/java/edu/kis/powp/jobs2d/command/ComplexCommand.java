@@ -1,7 +1,6 @@
 package edu.kis.powp.jobs2d.command;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -53,7 +52,7 @@ public class ComplexCommand implements ICompoundCommand {
 	public Iterator<DriverCommand> iterator() {
 		return commands.iterator();
   }
-}
+
 
 	public static final class Builder {
 
@@ -77,5 +76,5 @@ public class ComplexCommand implements ICompoundCommand {
 		public ComplexCommand build() {
 			return new ComplexCommand(new ArrayList<>(commandList));
 		}
-
+	}
 }
