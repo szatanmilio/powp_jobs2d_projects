@@ -23,6 +23,11 @@ public class SetPositionCommand implements DriverCommand {
 	}
 
 	@Override
+	public SetPositionCommand driverCommandClone() {
+		return new SetPositionCommand(this.posX, this.posY);
+	}
+
+  @Override
 	public String toString() {
 		return "Set Position\t" +
 				"X=" + posX +

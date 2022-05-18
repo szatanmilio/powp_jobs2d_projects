@@ -88,4 +88,5 @@ public class DriverCommandManager {
 	public Publisher getChangePublisher() {
 		return changePublisher;
 	}
+
 }

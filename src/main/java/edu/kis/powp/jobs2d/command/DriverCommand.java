@@ -15,5 +15,9 @@ public interface DriverCommand {
 	 */
 	void execute(Job2dDriver job2dDriver);
 
+	default DriverCommand driverCommandClone() {
+		return this.driverCommandClone();
+  }
+  
 	void accept(IDriverCommandsVisitor visitor);
 }

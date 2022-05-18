@@ -29,8 +29,12 @@ public class OperateToCommand implements DriverCommand {
 	}
 
 	@Override
+	public OperateToCommand driverCommandClone() {
+		return new OperateToCommand(this.posX, this.posY);
+	}
+
+  @Override
 	public void accept(IDriverCommandsVisitor visitor) {
 		visitor.doForOperateToCommand(this);
 	}
-
 }

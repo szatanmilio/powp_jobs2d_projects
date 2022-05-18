@@ -8,7 +8,6 @@ import java.util.Iterator;
 import java.util.List;
 
 public class ComplexCommand implements ICompoundCommand {
-
 	private final List<DriverCommand> commands;
 
 	public ComplexCommand() {
@@ -23,6 +22,10 @@ public class ComplexCommand implements ICompoundCommand {
 		this.commands.add(command);
 	}
 
+	public List<DriverCommand> getCommandList () {
+		return commands;
+	}
+
 	@Override
 	public void execute(Job2dDriver job2dDriver) {
 		for (DriverCommand command : commands) {
@@ -31,6 +34,16 @@ public class ComplexCommand implements ICompoundCommand {
 	}
 
 	@Override
+	public ComplexCommand driverCommandClone() {
+		ComplexCommand tempComplexCommand = new ComplexCommand();
+		for(DriverCommand driverCommand : this.commands) {
+			DriverCommand tempDriverCommand = driverCommand.driverCommandClone();
+			tempComplexCommand.appendCommand(tempDriverCommand);
+		}
+		return tempComplexCommand;
+  }
+  
+  @Override
 	public void accept(IDriverCommandsVisitor visitor) {
 		visitor.doForCompoundCommand(this);
 	}
