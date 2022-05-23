@@ -1,7 +1,6 @@
 package edu.kis.powp.jobs2d.command;
 
 import edu.kis.powp.jobs2d.Job2dDriver;
-import edu.kis.powp.jobs2d.command.visitor.ComplexCommandTransformationVisitor;
 import edu.kis.powp.jobs2d.command.visitor.IDriverCommandsVisitor;
 
 /**
@@ -21,5 +20,4 @@ public interface DriverCommand {
   }
   
 	void accept(IDriverCommandsVisitor visitor);
-	void accept(ComplexCommandTransformationVisitor visitor);
 }
