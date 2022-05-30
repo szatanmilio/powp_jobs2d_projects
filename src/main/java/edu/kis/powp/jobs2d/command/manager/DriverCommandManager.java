@@ -4,6 +4,9 @@ import edu.kis.powp.jobs2d.Job2dDriver;
 import edu.kis.powp.jobs2d.command.DriverCommand;
 import edu.kis.powp.jobs2d.command.ICompoundCommand;
 import edu.kis.powp.jobs2d.command.visitor.IDriverCommandsVisitor;
+import edu.kis.powp.jobs2d.command.visitor.TransformationFlipVisitorImpl;
+import edu.kis.powp.jobs2d.command.visitor.TransformationRotateVisitorImpl;
+import edu.kis.powp.jobs2d.command.visitor.TransformationScaleVisitorImpl;
 import edu.kis.powp.observer.Publisher;
 
 import java.util.Iterator;
@@ -61,6 +64,22 @@ public class DriverCommandManager {
 			public void accept(IDriverCommandsVisitor visitor) {
 				visitor.doForCompoundCommand(this);
 			}
+
+			@Override
+			public void accept(TransformationRotateVisitorImpl visitor) {
+
+			}
+
+			@Override
+			public void accept(TransformationScaleVisitorImpl visitor) {
+
+			}
+
+			@Override
+			public void accept(TransformationFlipVisitorImpl visitor) {
+
+			}
+
 		});
 
 	}
