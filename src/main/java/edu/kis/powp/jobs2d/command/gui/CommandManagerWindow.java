@@ -89,7 +89,7 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 		c.gridheight = 5;
 		c.gridwidth = 1;
 		content.add(previewPanel, c);
-		preview = new CommandManagerPreview(previewPanel, new BasicLine());
+		preview = new CommandManagerPreview(previewPanel);
 
 		JButton btnImportCommand = new JButton("Import command");
 		btnImportCommand.addActionListener((ActionEvent e) -> this.importCommandSequence());
