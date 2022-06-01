@@ -2,15 +2,13 @@ package edu.kis.powp.jobs2d.factories;
 
 import edu.kis.powp.jobs2d.command.ComplexCommand;
 import edu.kis.powp.jobs2d.command.DriverCommand;
-import edu.kis.powp.jobs2d.command.OperateToCommand;
-import edu.kis.powp.jobs2d.command.SetPositionCommand;
 
 public class ComplexCommandFactory {
     public enum TestShape {
         FIGURE1, FIGURE2 ,RECTANGLE, STAR
     }
 
-    public DriverCommand drawRectangle(int x, int y, int width, int height) {
+    public DriverCommand generateRectangle(int x, int y, int width, int height) {
         return new ComplexCommand.Builder()
                 .addSetPosition(x, y)
                 .addOperateTo(x+width, y)
@@ -18,10 +16,9 @@ public class ComplexCommandFactory {
                 .addOperateTo(x, y+height)
                 .addOperateTo(x, y)
                 .build();
-
     }
 
-    public DriverCommand drawTriangle(int x, int y, int height, int width) {
+    public DriverCommand generateTriangle(int x, int y, int height, int width) {
         return new ComplexCommand.Builder()
                 .addSetPosition(x, y)
                 .addOperateTo(x, y+height)
@@ -30,7 +27,7 @@ public class ComplexCommandFactory {
                 .build();
     }
 
-    public DriverCommand drawStar() {
+    public DriverCommand generateStar() {
         return new ComplexCommand.Builder()
                 .addSetPosition(60, 20)
                 .addOperateTo(100, 110)
