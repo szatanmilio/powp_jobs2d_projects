@@ -71,10 +71,13 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 		c.weightx = 1;
 		c.gridx = 0;
 		c.gridy = 1;
-		c.weighty = 1;
+		c.weighty = 3;
 		c.gridheight = 1;
 		c.gridwidth = 1;
-		content.add(currentCommandField, c);
+		JScrollPane scroll = new JScrollPane(currentCommandField,
+				JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+
+		content.add(scroll, c);
 		updateCurrentCommandField();
 
 		previewPanel = new JPanel();
@@ -149,31 +152,28 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 		String[] elements = path.split("\\.");
 		String extension = elements[elements.length - 1].toUpperCase();
 		try {
-			StringBuilder builder = new StringBuilder();
 			IImportCommand importCommand = ImporterFactory.getImporter(IImportCommand.Type.valueOf(extension));
 			String text = getTextFromFile(path);
 			List<DriverCommand> commandList = importCommand.importCommandSequence(text);
 			commandManager.setCurrentCommand(commandList, fileChooser.getSelectedFile().getName());
-			for (Iterator<DriverCommand> it = ((ICompoundCommand) commandManager.getCurrentCommand()).iterator(); it.hasNext(); ) {
-				builder.append('\n');
-				DriverCommand dc = it.next();
-				builder.append(dc.toString());
-			}
-			currentCommandField.append(builder.toString());
-			preview.update(commandList);
+			previewCommand();
 		} catch (IllegalArgumentException e) {
 			JOptionPane.showMessageDialog(null, "Error during parsing file!", "Error", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
 	public void previewCommand() {
+		StringBuilder builder = new StringBuilder();
 		preview.clear();
-		List<DriverCommand> dc = new ArrayList<>();
+		List<DriverCommand> dcList = new ArrayList<>();
 		for (Iterator<DriverCommand> it = ((ICompoundCommand) commandManager.getCurrentCommand()).iterator(); it.hasNext(); ) {
-			dc.add(it.next());
+			builder.append('\n');
+			DriverCommand dc = it.next();
+			dcList.add(dc);
+			builder.append(dc.toString());
 		}
-
-		preview.update(dc);
+		currentCommandField.append(builder.toString());
+		preview.update(dcList);
 	}
 
 	public void updateCurrentCommandField() {
