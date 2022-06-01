@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Stream;
@@ -126,6 +127,7 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 
 	private void clearCommand() {
 		commandManager.clearCurrentCommand();
+		preview.clear();
 		updateCurrentCommandField();
 	}
 
@@ -162,6 +164,16 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 		} catch (IllegalArgumentException e) {
 			JOptionPane.showMessageDialog(null, "Error during parsing file!", "Error", JOptionPane.ERROR_MESSAGE);
 		}
+	}
+
+	public void previewCommand() {
+		preview.clear();
+		List<DriverCommand> dc = new ArrayList<>();
+		for (Iterator<DriverCommand> it = ((ICompoundCommand) commandManager.getCurrentCommand()).iterator(); it.hasNext(); ) {
+			dc.add(it.next());
+		}
+
+		preview.update(dc);
 	}
 
 	public void updateCurrentCommandField() {

@@ -24,4 +24,8 @@ public class CommandManagerPreview {
 			dc.execute(lineAdapter);
 		}
 	}
+
+	public void clear() {
+		controller.clearPanel();
+	}
 }
