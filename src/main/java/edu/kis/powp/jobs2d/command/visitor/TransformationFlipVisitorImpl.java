@@ -1,9 +1,7 @@
 package edu.kis.powp.jobs2d.command.visitor;
 
-import edu.kis.powp.jobs2d.command.DriverCommand;
-import edu.kis.powp.jobs2d.command.ICompoundCommand;
-import edu.kis.powp.jobs2d.command.OperateToCommand;
-import edu.kis.powp.jobs2d.command.SetPositionCommand;
+import edu.kis.powp.jobs2d.command.*;
+import edu.kis.powp.jobs2d.command.manager.DriverCommandManager;
 
 import java.util.Iterator;
 
@@ -12,10 +10,14 @@ public class TransformationFlipVisitorImpl implements IDriverCommandsVisitor {
 	private boolean flipY;
 	private int x;
 	private int y;
+	private ComplexCommand complexCommand;
+	private DriverCommandManager driverCommandManager;
 
-	public TransformationFlipVisitorImpl(boolean flipX, boolean flipY) {
+	public TransformationFlipVisitorImpl(boolean flipX, boolean flipY, DriverCommandManager commandManager) {
 		this.flipX = flipX;
 		this.flipY = flipY;
+		this.complexCommand = new ComplexCommand();
+		this.driverCommandManager = commandManager;
 	}
 
 	private void flip(boolean flipX, boolean flipY){
@@ -28,6 +30,8 @@ public class TransformationFlipVisitorImpl implements IDriverCommandsVisitor {
 		this.x = command.getPosX();
 		this.y = command.getPosY();
 		this.flip(this.flipX, this.flipY);
+		OperateToCommand operateToCommand = new OperateToCommand(this.x, this.y);
+		this.complexCommand.appendCommand(operateToCommand);
 	}
 
 	@Override
@@ -35,6 +39,8 @@ public class TransformationFlipVisitorImpl implements IDriverCommandsVisitor {
 		this.x = command.getPosX();
 		this.y = command.getPosY();
 		this.flip(this.flipX, this.flipY);
+		SetPositionCommand setPositionCommand = new SetPositionCommand(this.x, this.y);
+		this.complexCommand.appendCommand(setPositionCommand);
 	}
 
 	@Override
@@ -44,6 +50,7 @@ public class TransformationFlipVisitorImpl implements IDriverCommandsVisitor {
 			DriverCommand tempDriverCommand = iterator.next();
 			tempDriverCommand.accept(this);
 		}
+		this.driverCommandManager.setCurrentCommand(this.complexCommand);
 	}
 
 	public int getX() {

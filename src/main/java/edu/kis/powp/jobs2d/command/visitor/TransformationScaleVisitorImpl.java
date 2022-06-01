@@ -1,9 +1,7 @@
 package edu.kis.powp.jobs2d.command.visitor;
 
-import edu.kis.powp.jobs2d.command.DriverCommand;
-import edu.kis.powp.jobs2d.command.ICompoundCommand;
-import edu.kis.powp.jobs2d.command.OperateToCommand;
-import edu.kis.powp.jobs2d.command.SetPositionCommand;
+import edu.kis.powp.jobs2d.command.*;
+import edu.kis.powp.jobs2d.command.manager.DriverCommandManager;
 
 import java.util.Iterator;
 
@@ -11,9 +9,13 @@ public class TransformationScaleVisitorImpl implements IDriverCommandsVisitor {
 	private int scaleRatio;
 	private int x;
 	private int y;
+	private ComplexCommand complexCommand;
+	private DriverCommandManager driverCommandManager;
 
-	public TransformationScaleVisitorImpl(int scaleRatio) {
+	public TransformationScaleVisitorImpl(int scaleRatio, DriverCommandManager commandManager) {
 		this.scaleRatio = scaleRatio;
+		this.complexCommand = new ComplexCommand();
+		this.driverCommandManager = commandManager;
 	}
 
 	private void scale(int scale){
@@ -26,6 +28,8 @@ public class TransformationScaleVisitorImpl implements IDriverCommandsVisitor {
 		this.x = command.getPosX();
 		this.y = command.getPosY();
 		this.scale(this.scaleRatio);
+		OperateToCommand operateToCommand = new OperateToCommand(this.x, this.y);
+		this.complexCommand.appendCommand(operateToCommand);
 	}
 
 	@Override
@@ -33,6 +37,8 @@ public class TransformationScaleVisitorImpl implements IDriverCommandsVisitor {
 		this.x = command.getPosX();
 		this.y = command.getPosY();
 		this.scale(this.scaleRatio);
+		SetPositionCommand setPositionCommand = new SetPositionCommand(this.x, this.y);
+		this.complexCommand.appendCommand(setPositionCommand);
 	}
 
 	@Override
@@ -42,6 +48,7 @@ public class TransformationScaleVisitorImpl implements IDriverCommandsVisitor {
 			DriverCommand tempDriverCommand = iterator.next();
 			tempDriverCommand.accept(this);
 		}
+		this.driverCommandManager.setCurrentCommand(this.complexCommand);
 	}
 
 	public int getX() {

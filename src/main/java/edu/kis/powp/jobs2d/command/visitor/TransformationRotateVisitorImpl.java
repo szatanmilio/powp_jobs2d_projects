@@ -1,9 +1,7 @@
 package edu.kis.powp.jobs2d.command.visitor;
 
-import edu.kis.powp.jobs2d.command.DriverCommand;
-import edu.kis.powp.jobs2d.command.ICompoundCommand;
-import edu.kis.powp.jobs2d.command.OperateToCommand;
-import edu.kis.powp.jobs2d.command.SetPositionCommand;
+import edu.kis.powp.jobs2d.command.*;
+import edu.kis.powp.jobs2d.command.manager.DriverCommandManager;
 
 import java.util.Iterator;
 
@@ -11,9 +9,13 @@ public class TransformationRotateVisitorImpl implements IDriverCommandsVisitor {
 	private int angle;
 	private int x;
 	private int y;
+	private ComplexCommand complexCommand;
+	private DriverCommandManager driverCommandManager;
 
-	public TransformationRotateVisitorImpl(int angle) {
+	public TransformationRotateVisitorImpl(int angle, DriverCommandManager commandManager) {
 		this.angle = angle;
+		this.complexCommand = new ComplexCommand();
+		this.driverCommandManager = commandManager;
 	}
 
 	private void rotate(int angle){
@@ -29,6 +31,8 @@ public class TransformationRotateVisitorImpl implements IDriverCommandsVisitor {
 		this.x = command.getPosX();
 		this.y = command.getPosY();
 		this.rotate(this.angle);
+		OperateToCommand operateToCommand = new OperateToCommand(this.x, this.y);
+		this.complexCommand.appendCommand(operateToCommand);
 	}
 
 	@Override
@@ -36,6 +40,8 @@ public class TransformationRotateVisitorImpl implements IDriverCommandsVisitor {
 		this.x = command.getPosX();
 		this.y = command.getPosY();
 		this.rotate(this.angle);
+		SetPositionCommand setPositionCommand = new SetPositionCommand(this.x, this.y);
+		this.complexCommand.appendCommand(setPositionCommand);
 	}
 
 	@Override
@@ -45,6 +51,7 @@ public class TransformationRotateVisitorImpl implements IDriverCommandsVisitor {
 			DriverCommand tempDriverCommand = iterator.next();
 			tempDriverCommand.accept(this);
 		}
+		this.driverCommandManager.setCurrentCommand(this.complexCommand);
 	}
 
 	public int getX() {
