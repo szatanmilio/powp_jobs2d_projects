@@ -17,11 +17,7 @@ import edu.kis.powp.jobs2d.drivers.DriverComposite;
 import edu.kis.powp.jobs2d.drivers.adapter.LineDriverAdapter;
 import edu.kis.powp.jobs2d.drivers.decorators.Job2dDriverUsageMonitorDecorator;
 import edu.kis.powp.jobs2d.drivers.gui.DriverUpdateInfoObserver;
-import edu.kis.powp.jobs2d.events.SelectLoadSecretCommandOptionListener;
-import edu.kis.powp.jobs2d.events.SelectRunCurrentCommandOptionListener;
-import edu.kis.powp.jobs2d.events.SelectTestFigure2OptionListener;
-import edu.kis.powp.jobs2d.events.SelectTestFigureOptionListener;
-import edu.kis.powp.jobs2d.events.SelectCommandsCountingVisitorOptionListner;
+import edu.kis.powp.jobs2d.events.*;
 import edu.kis.powp.jobs2d.factories.ComplexCommandFactory;
 import edu.kis.powp.jobs2d.features.CommandsFeature;
 import edu.kis.powp.jobs2d.features.DrawOnFreePanelFeature;
@@ -41,15 +37,9 @@ public class TestJobs2dApp {
 				DriverFeature.getDriverManager(), ComplexCommandFactory.TestShape.FIGURE1);
 		SelectTestFigure2OptionListener figure2 = new SelectTestFigure2OptionListener(
 				DriverFeature.getDriverManager());
-		SelectTestFigureOptionListener rectangle = new SelectTestFigureOptionListener(
-				DriverFeature.getDriverManager(), ComplexCommandFactory.TestShape.RECTANGLE);
-		SelectTestFigureOptionListener star = new SelectTestFigureOptionListener(
-				DriverFeature.getDriverManager(), ComplexCommandFactory.TestShape.STAR);
 
 		application.addTest("Figure Joe 1", figure1);
 		application.addTest("Figure Joe 2", figure2);
-		application.addTest("Rectangle", rectangle);
-		application.addTest("Star", star);
 	}
 
 	/**
@@ -58,7 +48,10 @@ public class TestJobs2dApp {
 	 * @param application Application context.
 	 */
 	private static void setupCommandTests(Application application) {
+		ComplexCommandFactory factory = new ComplexCommandFactory();
 		application.addTest("Load secret command", new SelectLoadSecretCommandOptionListener());
+		application.addTest("Star Command", new SelectStarCommandOptionListener(factory));
+		application.addTest("Rect Command", new SelectRectangleCommandOptionListener(factory));
 
 		application.addTest("Run command", new SelectRunCurrentCommandOptionListener(DriverFeature.getDriverManager()));
 

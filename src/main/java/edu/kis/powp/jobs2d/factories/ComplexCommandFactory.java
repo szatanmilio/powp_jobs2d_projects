@@ -2,36 +2,39 @@ package edu.kis.powp.jobs2d.factories;
 
 import edu.kis.powp.jobs2d.command.ComplexCommand;
 import edu.kis.powp.jobs2d.command.DriverCommand;
-import edu.kis.powp.jobs2d.command.OperateToCommand;
-import edu.kis.powp.jobs2d.command.SetPositionCommand;
 
 public class ComplexCommandFactory {
+    public enum TestShape {
+        FIGURE1, FIGURE2 ,RECTANGLE, STAR
+    }
 
-	private ComplexCommandFactory(){}
+    public DriverCommand generateRectangle(int x, int y, int width, int height) {
+        return new ComplexCommand.Builder()
+                .addSetPosition(x, y)
+                .addOperateTo(x+width, y)
+                .addOperateTo(x+width, y+height)
+                .addOperateTo(x, y+height)
+                .addOperateTo(x, y)
+                .build();
+    }
 
-	public enum TestShape {
-		FIGURE1, FIGURE2 ,RECTANGLE, STAR
-	}
+    public DriverCommand generateTriangle(int x, int y, int height, int width) {
+        return new ComplexCommand.Builder()
+                .addSetPosition(x, y)
+                .addOperateTo(x, y+height)
+                .addOperateTo(x+width, y+height)
+                .addOperateTo(x, y)
+                .build();
+    }
 
-	public static DriverCommand getRectangle()
-	{
-		ComplexCommand command = new ComplexCommand();
-		command.appendCommand(new SetPositionCommand(10, 10));
-		command.appendCommand(new OperateToCommand(20, 10));
-		command.appendCommand(new OperateToCommand(20, 20));
-		command.appendCommand(new OperateToCommand(10, 20));
-		command.appendCommand(new OperateToCommand(10, 10));
-		return command;
-	}
-	public static DriverCommand getStar()
-	{
-		ComplexCommand command = new ComplexCommand();
-		command.appendCommand(new SetPositionCommand(60, 20));
-		command.appendCommand(new OperateToCommand(100, 110));
-		command.appendCommand(new OperateToCommand(10, 50));
-		command.appendCommand(new OperateToCommand(110, 50));
-		command.appendCommand(new OperateToCommand(20, 110));
-		command.appendCommand(new OperateToCommand(60, 20));
-		return command;
-	}
+    public DriverCommand generateStar() {
+        return new ComplexCommand.Builder()
+                .addSetPosition(60, 20)
+                .addOperateTo(100, 110)
+                .addOperateTo(10, 50)
+                .addOperateTo(110, 50)
+                .addOperateTo(20, 110)
+                .addOperateTo(60, 20)
+                .build();
+    }
 }
