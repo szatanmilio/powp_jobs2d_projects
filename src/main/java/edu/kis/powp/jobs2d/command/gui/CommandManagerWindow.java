@@ -39,11 +39,15 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 	private String observerListString;
 	private JTextArea observerListField;
 	private JPanel previewPanel;
-	private CommandManagerPreview preview;
+	private ICommandManagerPreview preview;
 	/**
 	 *
 	 */
 	private static final long serialVersionUID = 9204679248304669948L;
+
+	public JPanel getPreviewPanel() {
+		return previewPanel;
+	}
 
 	public CommandManagerWindow(DriverCommandManager commandManager) {
 		this.setTitle("Command Manager");
@@ -128,6 +132,10 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 		content.add(btnClearObservers, c);
 	}
 
+	public void setPreview(ICommandManagerPreview preview) {
+		this.preview = preview;
+	}
+
 	private void clearCommand() {
 		commandManager.clearCurrentCommand();
 		preview.clear();
@@ -156,7 +164,6 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 			String text = getTextFromFile(path);
 			List<DriverCommand> commandList = importCommand.importCommandSequence(text);
 			commandManager.setCurrentCommand(commandList, fileChooser.getSelectedFile().getName());
-			previewCommand();
 		} catch (IllegalArgumentException e) {
 			JOptionPane.showMessageDialog(null, "Error during parsing file!", "Error", JOptionPane.ERROR_MESSAGE);
 		}

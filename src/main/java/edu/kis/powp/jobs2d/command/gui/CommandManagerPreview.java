@@ -9,7 +9,7 @@ import edu.kis.powp.jobs2d.drivers.adapter.LineDriverAdapter;
 import javax.swing.*;
 import java.util.List;
 
-public class CommandManagerPreview {
+public class CommandManagerPreview implements ICommandManagerPreview{
 	private DrawPanelController controller;
 	private LineDriverAdapter lineAdapter;
 
