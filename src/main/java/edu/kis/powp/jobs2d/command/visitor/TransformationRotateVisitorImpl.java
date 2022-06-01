@@ -4,19 +4,26 @@ import edu.kis.powp.jobs2d.command.OperateToCommand;
 import edu.kis.powp.jobs2d.command.SetPositionCommand;
 
 public class TransformationRotateVisitorImpl implements TransformationRotateVisitor {
-	int x;
-	int y;
+	private int angle;
+	private int x;
+	private int y;
+
+	public TransformationRotateVisitorImpl(int angle) {
+		this.angle = angle;
+	}
 
 	@Override
 	public void visit(OperateToCommand operateToCommand) {
 		this.x = operateToCommand.getPosX();
 		this.y = operateToCommand.getPosY();
+		this.rotate(this.angle);
 	}
 
 	@Override
 	public void visit(SetPositionCommand setPositionCommand) {
 		this.x = setPositionCommand.getPosX();
 		this.y = setPositionCommand.getPosY();
+		this.rotate(this.angle);
 	}
 
 	private void rotate(int angle){

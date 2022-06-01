@@ -30,7 +30,7 @@ public class SetPositionCommand implements DriverCommand {
 		return new SetPositionCommand(this.posX, this.posY);
 	}
 
-  @Override
+	@Override
 	public String toString() {
 		return "Set Position\t" +
 				"X=" + posX +
@@ -39,22 +39,15 @@ public class SetPositionCommand implements DriverCommand {
 
 	@Override
 	public void accept(IDriverCommandsVisitor visitor) {
-		visitor.doForSetPositionCommand(this);
-	}
-
-	@Override
-	public void accept(TransformationRotateVisitorImpl visitor) {
-		visitor.visit(this);
-	}
-
-	@Override
-	public void accept(TransformationScaleVisitorImpl visitor) {
-		visitor.visit(this);
-	}
-
-	@Override
-	public void accept(TransformationFlipVisitorImpl visitor) {
-		visitor.visit(this);
+		if (visitor instanceof TransformationFlipVisitorImpl) {
+			((TransformationFlipVisitorImpl) visitor).visit(this);
+		} else if (visitor instanceof TransformationRotateVisitorImpl) {
+			((TransformationRotateVisitorImpl) visitor).visit(this);
+		} else if (visitor instanceof TransformationScaleVisitorImpl) {
+			((TransformationScaleVisitorImpl) visitor).visit(this);
+		} else {
+			visitor.doForSetPositionCommand(this);
+		}
 	}
 
 	public int getPosX() {
