@@ -39,15 +39,7 @@ public class SetPositionCommand implements DriverCommand {
 
 	@Override
 	public void accept(IDriverCommandsVisitor visitor) {
-		if (visitor instanceof TransformationFlipVisitorImpl) {
-			((TransformationFlipVisitorImpl) visitor).visit(this);
-		} else if (visitor instanceof TransformationRotateVisitorImpl) {
-			((TransformationRotateVisitorImpl) visitor).visit(this);
-		} else if (visitor instanceof TransformationScaleVisitorImpl) {
-			((TransformationScaleVisitorImpl) visitor).visit(this);
-		} else {
-			visitor.doForSetPositionCommand(this);
-		}
+		visitor.doForSetPositionCommand(this);
 	}
 
 	public int getPosX() {

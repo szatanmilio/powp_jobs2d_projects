@@ -38,15 +38,7 @@ public class OperateToCommand implements DriverCommand {
 
 	@Override
 	public void accept(IDriverCommandsVisitor visitor) {
-		if (visitor instanceof TransformationFlipVisitorImpl) {
-			((TransformationFlipVisitorImpl) visitor).visit(this);
-		} else if (visitor instanceof TransformationRotateVisitorImpl) {
-			((TransformationRotateVisitorImpl) visitor).visit(this);
-		} else if (visitor instanceof TransformationScaleVisitorImpl) {
-			((TransformationScaleVisitorImpl) visitor).visit(this);
-		} else {
-			visitor.doForOperateToCommand(this);
-		}
+		visitor.doForOperateToCommand(this);
 	}
 
 

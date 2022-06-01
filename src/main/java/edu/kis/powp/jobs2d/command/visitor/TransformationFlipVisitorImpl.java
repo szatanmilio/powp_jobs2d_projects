@@ -1,10 +1,13 @@
 package edu.kis.powp.jobs2d.command.visitor;
 
+import edu.kis.powp.jobs2d.command.DriverCommand;
 import edu.kis.powp.jobs2d.command.ICompoundCommand;
 import edu.kis.powp.jobs2d.command.OperateToCommand;
 import edu.kis.powp.jobs2d.command.SetPositionCommand;
 
-public class TransformationFlipVisitorImpl implements TransformationFlipVisitor {
+import java.util.Iterator;
+
+public class TransformationFlipVisitorImpl implements IDriverCommandsVisitor {
 	private boolean flipX;
 	private boolean flipY;
 	private int x;
@@ -15,20 +18,6 @@ public class TransformationFlipVisitorImpl implements TransformationFlipVisitor 
 		this.flipY = flipY;
 	}
 
-	@Override
-	public void visit(OperateToCommand operateToCommand) {
-		this.x = operateToCommand.getPosX();
-		this.y = operateToCommand.getPosY();
-		this.flip(this.flipX, this.flipY);
-	}
-
-	@Override
-	public void visit(SetPositionCommand setPositionCommand) {
-		this.x = setPositionCommand.getPosX();
-		this.y = setPositionCommand.getPosY();
-		this.flip(this.flipX, this.flipY);
-	}
-
 	private void flip(boolean flipX, boolean flipY){
 		this.x = flipX ? this.x * -1 : this.x;
 		this.y = flipY ? this.y * -1 : this.y;
@@ -36,16 +25,32 @@ public class TransformationFlipVisitorImpl implements TransformationFlipVisitor 
 
 	@Override
 	public void doForOperateToCommand(OperateToCommand command) {
-
+		this.x = command.getPosX();
+		this.y = command.getPosY();
+		this.flip(this.flipX, this.flipY);
 	}
 
 	@Override
 	public void doForSetPositionCommand(SetPositionCommand command) {
-
+		this.x = command.getPosX();
+		this.y = command.getPosY();
+		this.flip(this.flipX, this.flipY);
 	}
 
 	@Override
 	public void doForCompoundCommand(ICompoundCommand command) {
+		Iterator<DriverCommand> iterator = command.iterator();
+		while (iterator.hasNext()) {
+			DriverCommand tempDriverCommand = iterator.next();
+			tempDriverCommand.accept(this);
+		}
+	}
 
+	public int getX() {
+		return x;
+	}
+
+	public int getY() {
+		return y;
 	}
 }

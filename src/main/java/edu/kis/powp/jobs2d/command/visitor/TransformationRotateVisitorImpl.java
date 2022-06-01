@@ -1,9 +1,13 @@
 package edu.kis.powp.jobs2d.command.visitor;
 
+import edu.kis.powp.jobs2d.command.DriverCommand;
+import edu.kis.powp.jobs2d.command.ICompoundCommand;
 import edu.kis.powp.jobs2d.command.OperateToCommand;
 import edu.kis.powp.jobs2d.command.SetPositionCommand;
 
-public class TransformationRotateVisitorImpl implements TransformationRotateVisitor {
+import java.util.Iterator;
+
+public class TransformationRotateVisitorImpl implements IDriverCommandsVisitor {
 	private int angle;
 	private int x;
 	private int y;
@@ -12,24 +16,42 @@ public class TransformationRotateVisitorImpl implements TransformationRotateVisi
 		this.angle = angle;
 	}
 
-	@Override
-	public void visit(OperateToCommand operateToCommand) {
-		this.x = operateToCommand.getPosX();
-		this.y = operateToCommand.getPosY();
-		this.rotate(this.angle);
-	}
-
-	@Override
-	public void visit(SetPositionCommand setPositionCommand) {
-		this.x = setPositionCommand.getPosX();
-		this.y = setPositionCommand.getPosY();
-		this.rotate(this.angle);
-	}
-
 	private void rotate(int angle){
 		double cos = Math.cos(Math.toRadians(angle));
 		double sin = Math.sin(Math.toRadians(angle));
-		this.x = (int) (this.x * cos - this.y * sin);
-		this.y = (int) (this.x * sin + this.y * cos);
+		int tempX = this.x;
+		this.x = (int) Math.round((this.x * cos + this.y * sin));
+		this.y = (int) Math.round((-(tempX * sin) + this.y * cos));
+	}
+
+	@Override
+	public void doForOperateToCommand(OperateToCommand command) {
+		this.x = command.getPosX();
+		this.y = command.getPosY();
+		this.rotate(this.angle);
+	}
+
+	@Override
+	public void doForSetPositionCommand(SetPositionCommand command) {
+		this.x = command.getPosX();
+		this.y = command.getPosY();
+		this.rotate(this.angle);
+	}
+
+	@Override
+	public void doForCompoundCommand(ICompoundCommand command) {
+		Iterator<DriverCommand> iterator = command.iterator();
+		while (iterator.hasNext()) {
+			DriverCommand tempDriverCommand = iterator.next();
+			tempDriverCommand.accept(this);
+		}
+	}
+
+	public int getX() {
+		return x;
+	}
+
+	public int getY() {
+		return y;
 	}
 }
