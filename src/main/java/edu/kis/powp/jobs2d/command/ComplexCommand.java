@@ -22,6 +22,13 @@ public class ComplexCommand implements ICompoundCommand {
 		this.commands.add(command);
   }
 
+	public String toString() {
+		String output="";
+		for(DriverCommand com : commands)
+			output = output + com.toString() + "\n";
+		return output;
+	}
+
 	public List<DriverCommand> getCommandList () {
 		return commands;
 	}
