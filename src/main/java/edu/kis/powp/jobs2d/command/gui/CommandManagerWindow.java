@@ -5,6 +5,8 @@ import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -19,6 +21,7 @@ import edu.kis.legacy.drawer.shape.line.BasicLine;
 import edu.kis.powp.appbase.Application;
 import edu.kis.powp.appbase.gui.WindowComponent;
 import edu.kis.powp.jobs2d.command.DriverCommand;
+import edu.kis.powp.jobs2d.command.ICompoundCommand;
 import edu.kis.powp.jobs2d.command.file.IImportCommand;
 import edu.kis.powp.jobs2d.command.file.ImporterFactory;
 import edu.kis.powp.jobs2d.command.manager.DriverCommandManager;
@@ -36,15 +39,19 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 	private String observerListString;
 	private JTextArea observerListField;
 	private JPanel previewPanel;
-
+	private ICommandManagerPreview preview;
 	/**
 	 *
 	 */
 	private static final long serialVersionUID = 9204679248304669948L;
 
+	public JPanel getPreviewPanel() {
+		return previewPanel;
+	}
+
 	public CommandManagerWindow(DriverCommandManager commandManager) {
 		this.setTitle("Command Manager");
-		this.setSize(1000, 600);
+		this.setSize(1200, 600);
 		Container content = this.getContentPane();
 		content.setLayout(new GridBagLayout());
 		this.commandManager = commandManager;
@@ -55,7 +62,10 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 		c.fill = GridBagConstraints.BOTH;
 		c.weightx = 1;
 		c.gridx = 0;
+		c.gridy = 0;
 		c.weighty = 1;
+		c.gridheight = 1;
+		c.gridwidth = 1;
 		content.add(observerListField, c);
 		updateObserverListField();
 
@@ -64,8 +74,14 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 		c.fill = GridBagConstraints.BOTH;
 		c.weightx = 1;
 		c.gridx = 0;
-		c.weighty = 1;
-		content.add(currentCommandField, c);
+		c.gridy = 1;
+		c.weighty = 3;
+		c.gridheight = 1;
+		c.gridwidth = 1;
+		JScrollPane scroll = new JScrollPane(currentCommandField,
+				JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+
+		content.add(scroll, c);
 		updateCurrentCommandField();
 
 		previewPanel = new JPanel();
@@ -75,24 +91,33 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 		c.fill = GridBagConstraints.BOTH;
 		c.weightx = 10;
 		c.gridx = 1;
-		c.weighty = 20;
+		c.gridy = 0;
+		c.weighty = 1;
+		c.gridheight = 5;
+		c.gridwidth = 1;
 		content.add(previewPanel, c);
-
+		preview = new CommandManagerPreview(previewPanel);
 
 		JButton btnImportCommand = new JButton("Import command");
 		btnImportCommand.addActionListener((ActionEvent e) -> this.importCommandSequence());
 		c.fill = GridBagConstraints.BOTH;
 		c.weightx = 1;
-		c.gridx = 1;
+		c.gridx = 0;
+		c.gridy = 2;
 		c.weighty = 1;
+		c.gridheight = 1;
+		c.gridwidth = 1;
 		content.add(btnImportCommand, c);
 
 		JButton btnClearCommand = new JButton("Clear command");
 		btnClearCommand.addActionListener((ActionEvent e) -> this.clearCommand());
 		c.fill = GridBagConstraints.BOTH;
 		c.weightx = 1;
-		c.gridx = 1;
+		c.gridx = 0;
+		c.gridy = 3;
 		c.weighty = 1;
+		c.gridheight = 1;
+		c.gridwidth = 1;
 		content.add(btnClearCommand, c);
 
 		JButton btnClearObservers = new JButton("Delete observers");
@@ -100,21 +125,20 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 		c.fill = GridBagConstraints.BOTH;
 		c.weightx = 1;
 		c.gridx = 0;
+		c.gridy = 4;
 		c.weighty = 1;
+		c.gridheight = 1;
+		c.gridwidth = 1;
 		content.add(btnClearObservers, c);
 	}
 
-	private void updatePanelPreview(List<DriverCommand> commandList) {
-		DrawPanelController dpc = new DrawPanelController();
-		dpc.initialize(previewPanel);
-		LineDriverAdapter lda = new LineDriverAdapter(dpc, new BasicLine(), "Preview");
-		for (DriverCommand dc : commandList) {
-			dc.execute(lda);
-		}
+	public void setPreview(ICommandManagerPreview preview) {
+		this.preview = preview;
 	}
 
 	private void clearCommand() {
 		commandManager.clearCurrentCommand();
+		preview.clear();
 		updateCurrentCommandField();
 	}
 
@@ -140,10 +164,23 @@ public class CommandManagerWindow extends JFrame implements WindowComponent {
 			String text = getTextFromFile(path);
 			List<DriverCommand> commandList = importCommand.importCommandSequence(text);
 			commandManager.setCurrentCommand(commandList, fileChooser.getSelectedFile().getName());
-			updatePanelPreview(commandList);
 		} catch (IllegalArgumentException e) {
 			JOptionPane.showMessageDialog(null, "Error during parsing file!", "Error", JOptionPane.ERROR_MESSAGE);
 		}
+	}
+
+	public void previewCommand() {
+		StringBuilder builder = new StringBuilder();
+		preview.clear();
+		List<DriverCommand> dcList = new ArrayList<>();
+		for (Iterator<DriverCommand> it = ((ICompoundCommand) commandManager.getCurrentCommand()).iterator(); it.hasNext(); ) {
+			builder.append('\n');
+			DriverCommand dc = it.next();
+			dcList.add(dc);
+			builder.append(dc.toString());
+		}
+		currentCommandField.append(builder.toString());
+		preview.update(dcList);
 	}
 
 	public void updateCurrentCommandField() {
