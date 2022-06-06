@@ -18,9 +18,9 @@ public class TransformationRotateVisitorImpl implements IDriverCommandsVisitor {
 		this.driverCommandManager = commandManager;
 	}
 
-	private void rotate(int angle){
-		double cos = Math.cos(Math.toRadians(angle));
-		double sin = Math.sin(Math.toRadians(angle));
+	private void rotate(){
+		double cos = Math.cos(Math.toRadians(this.angle));
+		double sin = Math.sin(Math.toRadians(this.angle));
 		int tempX = this.x;
 		this.x = (int) Math.round((this.x * cos + this.y * sin));
 		this.y = (int) Math.round((-(tempX * sin) + this.y * cos));
@@ -30,7 +30,7 @@ public class TransformationRotateVisitorImpl implements IDriverCommandsVisitor {
 	public void doForOperateToCommand(OperateToCommand command) {
 		this.x = command.getPosX();
 		this.y = command.getPosY();
-		this.rotate(this.angle);
+		this.rotate();
 		OperateToCommand operateToCommand = new OperateToCommand(this.x, this.y);
 		this.complexCommand.appendCommand(operateToCommand);
 	}
@@ -39,7 +39,7 @@ public class TransformationRotateVisitorImpl implements IDriverCommandsVisitor {
 	public void doForSetPositionCommand(SetPositionCommand command) {
 		this.x = command.getPosX();
 		this.y = command.getPosY();
-		this.rotate(this.angle);
+		this.rotate();
 		SetPositionCommand setPositionCommand = new SetPositionCommand(this.x, this.y);
 		this.complexCommand.appendCommand(setPositionCommand);
 	}

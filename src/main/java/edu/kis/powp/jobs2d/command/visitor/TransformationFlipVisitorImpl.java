@@ -20,7 +20,7 @@ public class TransformationFlipVisitorImpl implements IDriverCommandsVisitor {
 		this.driverCommandManager = commandManager;
 	}
 
-	private void flip(boolean flipX, boolean flipY){
+	private void flip(){
 		this.x = flipX ? this.x * -1 : this.x;
 		this.y = flipY ? this.y * -1 : this.y;
 	}
@@ -29,7 +29,7 @@ public class TransformationFlipVisitorImpl implements IDriverCommandsVisitor {
 	public void doForOperateToCommand(OperateToCommand command) {
 		this.x = command.getPosX();
 		this.y = command.getPosY();
-		this.flip(this.flipX, this.flipY);
+		this.flip();
 		OperateToCommand operateToCommand = new OperateToCommand(this.x, this.y);
 		this.complexCommand.appendCommand(operateToCommand);
 	}
@@ -38,7 +38,7 @@ public class TransformationFlipVisitorImpl implements IDriverCommandsVisitor {
 	public void doForSetPositionCommand(SetPositionCommand command) {
 		this.x = command.getPosX();
 		this.y = command.getPosY();
-		this.flip(this.flipX, this.flipY);
+		this.flip();
 		SetPositionCommand setPositionCommand = new SetPositionCommand(this.x, this.y);
 		this.complexCommand.appendCommand(setPositionCommand);
 	}

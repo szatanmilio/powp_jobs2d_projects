@@ -18,16 +18,16 @@ public class TransformationScaleVisitorImpl implements IDriverCommandsVisitor {
 		this.driverCommandManager = commandManager;
 	}
 
-	private void scale(int scale){
-		this.x = (this.x * scale);
-		this.y = (this.y * scale);
+	private void scale() {
+		this.x = (this.x * this.scaleRatio);
+		this.y = (this.y * this.scaleRatio);
 	}
 
 	@Override
 	public void doForOperateToCommand(OperateToCommand command) {
 		this.x = command.getPosX();
 		this.y = command.getPosY();
-		this.scale(this.scaleRatio);
+		this.scale();
 		OperateToCommand operateToCommand = new OperateToCommand(this.x, this.y);
 		this.complexCommand.appendCommand(operateToCommand);
 	}
@@ -36,7 +36,7 @@ public class TransformationScaleVisitorImpl implements IDriverCommandsVisitor {
 	public void doForSetPositionCommand(SetPositionCommand command) {
 		this.x = command.getPosX();
 		this.y = command.getPosY();
-		this.scale(this.scaleRatio);
+		this.scale();
 		SetPositionCommand setPositionCommand = new SetPositionCommand(this.x, this.y);
 		this.complexCommand.appendCommand(setPositionCommand);
 	}
