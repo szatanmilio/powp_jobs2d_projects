@@ -1,7 +1,6 @@
 package edu.kis.powp.jobs2d.command.visitor;
 
 import edu.kis.powp.jobs2d.command.*;
-import edu.kis.powp.jobs2d.command.manager.DriverCommandManager;
 
 import java.util.Iterator;
 
@@ -9,13 +8,10 @@ public class TransformationScaleVisitorImpl implements IDriverCommandsVisitor {
 	private int scaleRatio;
 	private int x;
 	private int y;
-	private ComplexCommand complexCommand;
-	private DriverCommandManager driverCommandManager;
+	private DriverCommand tempCommand;
 
-	public TransformationScaleVisitorImpl(int scaleRatio, DriverCommandManager commandManager) {
+	public TransformationScaleVisitorImpl(int scaleRatio) {
 		this.scaleRatio = scaleRatio;
-		this.complexCommand = new ComplexCommand();
-		this.driverCommandManager = commandManager;
 	}
 
 	private void scale() {
@@ -29,7 +25,7 @@ public class TransformationScaleVisitorImpl implements IDriverCommandsVisitor {
 		this.y = command.getPosY();
 		this.scale();
 		OperateToCommand operateToCommand = new OperateToCommand(this.x, this.y);
-		this.complexCommand.appendCommand(operateToCommand);
+		this.tempCommand = operateToCommand;
 	}
 
 	@Override
@@ -38,17 +34,19 @@ public class TransformationScaleVisitorImpl implements IDriverCommandsVisitor {
 		this.y = command.getPosY();
 		this.scale();
 		SetPositionCommand setPositionCommand = new SetPositionCommand(this.x, this.y);
-		this.complexCommand.appendCommand(setPositionCommand);
+		this.tempCommand = setPositionCommand;
 	}
 
 	@Override
 	public void doForCompoundCommand(ICompoundCommand command) {
 		Iterator<DriverCommand> iterator = command.iterator();
+		ComplexCommand complexCommand = new ComplexCommand();
 		while (iterator.hasNext()) {
 			DriverCommand tempDriverCommand = iterator.next();
 			tempDriverCommand.accept(this);
+			complexCommand.appendCommand(this.tempCommand);
 		}
-		this.driverCommandManager.setCurrentCommand(this.complexCommand);
+		this.tempCommand = complexCommand;
 	}
 
 	public int getX() {
@@ -57,5 +55,9 @@ public class TransformationScaleVisitorImpl implements IDriverCommandsVisitor {
 
 	public int getY() {
 		return y;
+	}
+
+	public DriverCommand getTempCommand() {
+		return tempCommand;
 	}
 }

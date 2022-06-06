@@ -35,6 +35,10 @@ public class SelectTestFigureOptionListener implements ActionListener {
 			case STAR:
 				ComplexCommandFactory.getStar().execute(driverManager.getCurrentDriver());
 				break;
+
+			case STAR_SCALE_2:
+				ComplexCommandFactory.getStarScale2().execute(driverManager.getCurrentDriver());
+				break;
 		}
 	}
 }

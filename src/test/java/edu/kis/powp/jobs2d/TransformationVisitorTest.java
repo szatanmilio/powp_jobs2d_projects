@@ -20,91 +20,92 @@ public class TransformationVisitorTest {
 		SetPositionCommand setPositionCommand = new SetPositionCommand(10, 20);
 
 		// flip visitor operateTo
-		TransformationFlipVisitorImpl flipVisitor = new TransformationFlipVisitorImpl(true, false, driverCommandManager);
-		flipVisitor.doForOperateToCommand(operateToCommand);
+		TransformationFlipVisitorImpl flipVisitor = new TransformationFlipVisitorImpl(true, false);
+		operateToCommand.accept(flipVisitor);
 		assertEquals(flipVisitor.getX(), -10);
 		assertEquals(flipVisitor.getY(), 20);
 
-		flipVisitor = new TransformationFlipVisitorImpl(true, true, driverCommandManager);
-		flipVisitor.doForOperateToCommand(operateToCommand);
+
+		flipVisitor = new TransformationFlipVisitorImpl(true, true);
+		operateToCommand.accept(flipVisitor);
 		assertEquals(flipVisitor.getX(), -10);
 		assertEquals(flipVisitor.getY(), -20);
 
-		flipVisitor = new TransformationFlipVisitorImpl(false, true, driverCommandManager);
-		flipVisitor.doForOperateToCommand(operateToCommand);
+		flipVisitor = new TransformationFlipVisitorImpl(false, true);
+		operateToCommand.accept(flipVisitor);
 		assertEquals(flipVisitor.getX(), 10);
 		assertEquals(flipVisitor.getY(), -20);
 
-		flipVisitor = new TransformationFlipVisitorImpl(false, false, driverCommandManager);
-		flipVisitor.doForOperateToCommand(operateToCommand);
+		flipVisitor = new TransformationFlipVisitorImpl(false, false);
+		operateToCommand.accept(flipVisitor);
 		assertEquals(flipVisitor.getX(), 10);
 		assertEquals(flipVisitor.getY(), 20);
 
 
 		// flip visitor setPosition
-		flipVisitor = new TransformationFlipVisitorImpl(true, false, driverCommandManager);
-		flipVisitor.doForSetPositionCommand(setPositionCommand);
+		flipVisitor = new TransformationFlipVisitorImpl(true, false);
+		setPositionCommand.accept(flipVisitor);
 		assertEquals(flipVisitor.getX(), -10);
 		assertEquals(flipVisitor.getY(), 20);
 
-		flipVisitor = new TransformationFlipVisitorImpl(true, true, driverCommandManager);
-		flipVisitor.doForSetPositionCommand(setPositionCommand);
+		flipVisitor = new TransformationFlipVisitorImpl(true, true);
+		setPositionCommand.accept(flipVisitor);
 		assertEquals(flipVisitor.getX(), -10);
 		assertEquals(flipVisitor.getY(), -20);
 
-		flipVisitor = new TransformationFlipVisitorImpl(false, true, driverCommandManager);
-		flipVisitor.doForSetPositionCommand(setPositionCommand);
+		flipVisitor = new TransformationFlipVisitorImpl(false, true);
+		setPositionCommand.accept(flipVisitor);
 		assertEquals(flipVisitor.getX(), 10);
 		assertEquals(flipVisitor.getY(), -20);
 
-		flipVisitor = new TransformationFlipVisitorImpl(false, false, driverCommandManager);
-		flipVisitor.doForSetPositionCommand(setPositionCommand);
+		flipVisitor = new TransformationFlipVisitorImpl(false, false);
+		setPositionCommand.accept(flipVisitor);
 		assertEquals(flipVisitor.getX(), 10);
 		assertEquals(flipVisitor.getY(), 20);
 
 
 		// rotate visitor operateTo
-		TransformationRotateVisitorImpl rotateVisitor = new TransformationRotateVisitorImpl(90, driverCommandManager);
-		rotateVisitor.doForOperateToCommand(operateToCommand);
+		TransformationRotateVisitorImpl rotateVisitor = new TransformationRotateVisitorImpl(90);
+		operateToCommand.accept(rotateVisitor);
 		assertEquals(rotateVisitor.getX(), 20);
 		assertEquals(rotateVisitor.getY(), -10);
 
-		rotateVisitor = new TransformationRotateVisitorImpl(180, driverCommandManager);
-		rotateVisitor.doForOperateToCommand(operateToCommand);
+		rotateVisitor = new TransformationRotateVisitorImpl(180);
+		operateToCommand.accept(rotateVisitor);
 		assertEquals(rotateVisitor.getX(), -10);
 		assertEquals(rotateVisitor.getY(), -20);
 
-		rotateVisitor = new TransformationRotateVisitorImpl(270, driverCommandManager);
-		rotateVisitor.doForOperateToCommand(operateToCommand);
+		rotateVisitor = new TransformationRotateVisitorImpl(270);
+		operateToCommand.accept(rotateVisitor);
 		assertEquals(rotateVisitor.getX(), -20);
 		assertEquals(rotateVisitor.getY(), 10);
 
 
 		// rotate visitor setPosition
-		rotateVisitor = new TransformationRotateVisitorImpl(90, driverCommandManager);
-		rotateVisitor.doForSetPositionCommand(setPositionCommand);
+		rotateVisitor = new TransformationRotateVisitorImpl(90);
+		setPositionCommand.accept(rotateVisitor);
 		assertEquals(rotateVisitor.getX(), 20);
 		assertEquals(rotateVisitor.getY(), -10);
 
-		rotateVisitor = new TransformationRotateVisitorImpl(180, driverCommandManager);
-		rotateVisitor.doForSetPositionCommand(setPositionCommand);
+		rotateVisitor = new TransformationRotateVisitorImpl(180);
+		setPositionCommand.accept(rotateVisitor);
 		assertEquals(rotateVisitor.getX(), -10);
 		assertEquals(rotateVisitor.getY(), -20);
 
-		rotateVisitor = new TransformationRotateVisitorImpl(270, driverCommandManager);
-		rotateVisitor.doForSetPositionCommand(setPositionCommand);
+		rotateVisitor = new TransformationRotateVisitorImpl(270);
+		setPositionCommand.accept(rotateVisitor);
 		assertEquals(rotateVisitor.getX(), -20);
 		assertEquals(rotateVisitor.getY(), 10);
 
 		// scale visitor operateTo
-		TransformationScaleVisitorImpl scaleVisitor = new TransformationScaleVisitorImpl(2, driverCommandManager);
-		scaleVisitor.doForOperateToCommand(operateToCommand);
+		TransformationScaleVisitorImpl scaleVisitor = new TransformationScaleVisitorImpl(2);
+		operateToCommand.accept(scaleVisitor);
 		assertEquals(scaleVisitor.getX(), 20);
 		assertEquals(scaleVisitor.getY(), 40);
 
 		// scale visitor setPosition
-		scaleVisitor = new TransformationScaleVisitorImpl(2, driverCommandManager);
-		scaleVisitor.doForSetPositionCommand(setPositionCommand);
+		scaleVisitor = new TransformationScaleVisitorImpl(2);
+		setPositionCommand.accept(scaleVisitor);
 		assertEquals(scaleVisitor.getX(), 20);
 		assertEquals(scaleVisitor.getY(), 40);
 

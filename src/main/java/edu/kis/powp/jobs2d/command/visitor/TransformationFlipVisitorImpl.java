@@ -1,7 +1,6 @@
 package edu.kis.powp.jobs2d.command.visitor;
 
 import edu.kis.powp.jobs2d.command.*;
-import edu.kis.powp.jobs2d.command.manager.DriverCommandManager;
 
 import java.util.Iterator;
 
@@ -10,14 +9,11 @@ public class TransformationFlipVisitorImpl implements IDriverCommandsVisitor {
 	private boolean flipY;
 	private int x;
 	private int y;
-	private ComplexCommand complexCommand;
-	private DriverCommandManager driverCommandManager;
+	private DriverCommand tempCommand;
 
-	public TransformationFlipVisitorImpl(boolean flipX, boolean flipY, DriverCommandManager commandManager) {
+	public TransformationFlipVisitorImpl(boolean flipX, boolean flipY) {
 		this.flipX = flipX;
 		this.flipY = flipY;
-		this.complexCommand = new ComplexCommand();
-		this.driverCommandManager = commandManager;
 	}
 
 	private void flip(){
@@ -31,7 +27,7 @@ public class TransformationFlipVisitorImpl implements IDriverCommandsVisitor {
 		this.y = command.getPosY();
 		this.flip();
 		OperateToCommand operateToCommand = new OperateToCommand(this.x, this.y);
-		this.complexCommand.appendCommand(operateToCommand);
+		this.tempCommand = operateToCommand;
 	}
 
 	@Override
@@ -40,17 +36,19 @@ public class TransformationFlipVisitorImpl implements IDriverCommandsVisitor {
 		this.y = command.getPosY();
 		this.flip();
 		SetPositionCommand setPositionCommand = new SetPositionCommand(this.x, this.y);
-		this.complexCommand.appendCommand(setPositionCommand);
+		this.tempCommand = setPositionCommand;
 	}
 
 	@Override
 	public void doForCompoundCommand(ICompoundCommand command) {
 		Iterator<DriverCommand> iterator = command.iterator();
+		ComplexCommand complexCommand = new ComplexCommand();
 		while (iterator.hasNext()) {
 			DriverCommand tempDriverCommand = iterator.next();
 			tempDriverCommand.accept(this);
+			complexCommand.appendCommand(this.tempCommand);
 		}
-		this.driverCommandManager.setCurrentCommand(this.complexCommand);
+		this.tempCommand = complexCommand;
 	}
 
 	public int getX() {
@@ -59,5 +57,9 @@ public class TransformationFlipVisitorImpl implements IDriverCommandsVisitor {
 
 	public int getY() {
 		return y;
+	}
+
+	public DriverCommand getTempCommand() {
+		return tempCommand;
 	}
 }

@@ -1,7 +1,6 @@
 package edu.kis.powp.jobs2d.command.visitor;
 
 import edu.kis.powp.jobs2d.command.*;
-import edu.kis.powp.jobs2d.command.manager.DriverCommandManager;
 
 import java.util.Iterator;
 
@@ -9,13 +8,10 @@ public class TransformationRotateVisitorImpl implements IDriverCommandsVisitor {
 	private int angle;
 	private int x;
 	private int y;
-	private ComplexCommand complexCommand;
-	private DriverCommandManager driverCommandManager;
+	private DriverCommand tempCommand;
 
-	public TransformationRotateVisitorImpl(int angle, DriverCommandManager commandManager) {
+	public TransformationRotateVisitorImpl(int angle) {
 		this.angle = angle;
-		this.complexCommand = new ComplexCommand();
-		this.driverCommandManager = commandManager;
 	}
 
 	private void rotate(){
@@ -32,7 +28,7 @@ public class TransformationRotateVisitorImpl implements IDriverCommandsVisitor {
 		this.y = command.getPosY();
 		this.rotate();
 		OperateToCommand operateToCommand = new OperateToCommand(this.x, this.y);
-		this.complexCommand.appendCommand(operateToCommand);
+		this.tempCommand = operateToCommand;
 	}
 
 	@Override
@@ -41,17 +37,19 @@ public class TransformationRotateVisitorImpl implements IDriverCommandsVisitor {
 		this.y = command.getPosY();
 		this.rotate();
 		SetPositionCommand setPositionCommand = new SetPositionCommand(this.x, this.y);
-		this.complexCommand.appendCommand(setPositionCommand);
+		this.tempCommand = setPositionCommand;
 	}
 
 	@Override
 	public void doForCompoundCommand(ICompoundCommand command) {
 		Iterator<DriverCommand> iterator = command.iterator();
+		ComplexCommand complexCommand = new ComplexCommand();
 		while (iterator.hasNext()) {
 			DriverCommand tempDriverCommand = iterator.next();
 			tempDriverCommand.accept(this);
+			complexCommand.appendCommand(this.tempCommand);
 		}
-		this.driverCommandManager.setCurrentCommand(this.complexCommand);
+		this.tempCommand = complexCommand;
 	}
 
 	public int getX() {
@@ -60,5 +58,9 @@ public class TransformationRotateVisitorImpl implements IDriverCommandsVisitor {
 
 	public int getY() {
 		return y;
+	}
+
+	public DriverCommand getTempCommand() {
+		return tempCommand;
 	}
 }

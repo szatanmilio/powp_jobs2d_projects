@@ -4,13 +4,14 @@ import edu.kis.powp.jobs2d.command.ComplexCommand;
 import edu.kis.powp.jobs2d.command.DriverCommand;
 import edu.kis.powp.jobs2d.command.OperateToCommand;
 import edu.kis.powp.jobs2d.command.SetPositionCommand;
+import edu.kis.powp.jobs2d.command.visitor.TransformationScaleVisitorImpl;
 
 public class ComplexCommandFactory {
 
 	private ComplexCommandFactory(){}
 
 	public enum TestShape {
-		FIGURE1, FIGURE2 ,RECTANGLE, STAR
+		FIGURE1, FIGURE2 ,RECTANGLE, STAR, STAR_SCALE_2
 	}
 
 	public static DriverCommand getRectangle()
@@ -33,5 +34,11 @@ public class ComplexCommandFactory {
 		command.appendCommand(new OperateToCommand(20, 110));
 		command.appendCommand(new OperateToCommand(60, 20));
 		return command;
+	}
+	public static DriverCommand getStarScale2() {
+		ComplexCommand command = (ComplexCommand) ComplexCommandFactory.getStar();
+		TransformationScaleVisitorImpl scaleVisitor = new TransformationScaleVisitorImpl(2);
+		command.accept(scaleVisitor);
+		return scaleVisitor.getTempCommand();
 	}
 }
