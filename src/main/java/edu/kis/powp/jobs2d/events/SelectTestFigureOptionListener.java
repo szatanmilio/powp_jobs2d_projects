@@ -46,9 +46,9 @@ public class SelectTestFigureOptionListener implements ActionListener {
 				int width = 100;
 				int height = 100;
 				commands.add(new SetPositionCommand(x, y));
-				commands.add(new OperateToCommand(x+width, y));
-				commands.add(new OperateToCommand(x+width, y+height));
-				commands.add(new OperateToCommand(x, y+height));
+				commands.add(new OperateToCommand(x + width, y));
+				commands.add(new OperateToCommand(x + width, y + height));
+				commands.add(new OperateToCommand(x, y + height));
 				commands.add(new OperateToCommand(x, y));
 				complexCommand.execute(driver);
 				break;
@@ -63,7 +63,7 @@ public class SelectTestFigureOptionListener implements ActionListener {
 				break;
 
 			case STAR_SCALE_2:
-				ComplexCommandFactory.getStarScale2().execute(driverManager.getCurrentDriver());
+				new ComplexCommandFactory().getStarScale2().execute(driverManager.getCurrentDriver());
 				break;
 		}
 	}
